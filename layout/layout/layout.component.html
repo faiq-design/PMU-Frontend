@@ -1,0 +1,21 @@
+<div class="container-scroller">
+  <app-navbar *ngIf="showNavbar"></app-navbar>
+  <div class="container-fluid page-body-wrapper">
+    <app-sidebar *ngIf="showSidebar" class="fixed-sidebar"></app-sidebar>
+    <div class="main-panel" [ngClass]="{ 'main-panel-only': !showSidebar }">
+      <div class="content-wrapper">
+        <router-outlet></router-outlet>
+      </div>
+      <app-footer *ngIf="showFooter"></app-footer>
+    </div>
+  </div>
+</div>
+
+
+<!-- <div class="popup" id="infoPopup" *ngIf="showPopup">
+  <div class="popup-content">
+    <span class="close" (click)="closePopup()">&times;</span>
+    <h2>Information</h2>
+    <p>{{serverDownMessage}}</p>
+  </div>
+</div> -->

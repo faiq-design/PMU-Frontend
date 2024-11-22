@@ -1,0 +1,211 @@
+<app-spinner *ngIf="loading"></app-spinner>
+
+<!-- <div class="col-lg-12 grid-margin stretch-card" *ngIf="!loading">
+  <div class="card">
+    <div class="card-body">
+      <h4 class="card-title">Hospital List</h4>
+  
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>
+                #
+              </th>
+              <th>
+                Name
+              </th>
+              <th>
+                District
+              </th>
+              <th>
+                Package No.
+              </th>
+            </tr>
+          </thead>
+          <tbody *ngIf="hospitalList?.length>0">
+            <ng-container *ngFor="let v of hospitalList; let i = index">
+              <tr >
+                <td class="py-1">
+                  {{i+1}}
+                </td>
+             
+                <td style="cursor: pointer;">
+                  <span (click)="editModal(mediumModalContent, v)" class="nav-link">{{v.title}}</span>
+                </td>
+                <td>
+                  <address>{{v.district}}</address>
+                  
+                </td>
+                <td>
+                 {{v.packageNo}}
+                </td>
+               
+              </tr>
+
+            </ng-container>
+           
+           
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Field Hopistal List</h4>
+        <div class="table-responsive pt-3" *ngIf="!loading">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>District</th>
+                <th>Contact</th>
+                <th>Contact's No.</th>
+                <th>Edit</th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container *ngFor="let v of hospitalList; let i = index">
+                <tr class="table-row">
+                  <td class="py-1">
+                    {{ i + 1 }}
+                  </td>
+
+                  <td>
+                    <!-- <span (click)="editModal(mediumModalContent, v)" class="nav-link">{{v.title}}</span> -->
+                    {{ v.title }}
+                  </td>
+                  <td>
+                    {{ v.district }}
+                  </td>
+                  <td>
+                    {{ v.contact }}
+                  </td>
+                  <td>
+                    {{ v.contactPerson }}
+                  </td>
+                  <!-- <td>
+                    <label class="badge badge-success">{{
+                      invoice.invoiceStatus
+                    }}</label>
+                  </td> -->
+                  <td>
+                    <button
+                      type="button"
+                      class="btn btn-gradient-primary"
+                      (click)="editModal(mediumModalContent, v)"
+                    >
+                      <i class="mdi mdi-arrow-right-bold-circle"></i>
+                    </button>
+                  </td>
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- modal starts -->
+<ng-template
+  #mediumModalContent
+  let-modal
+  class="modal fade"
+  id="exampleModal-2"
+  aria-labelledby="exampleModalLabel-2"
+>
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel-2">Edit Hospital</h5>
+      <button
+        type="button"
+        class="close"
+        (click)="modal.dismiss()"
+        aria-label="Close"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <!-- <p>Modal body text goes here...</p> -->
+      <div class="card">
+        <div class="card-body">
+          <!-- <h4 class="card-title">Default form</h4>
+          <p class="card-description">
+            Basic form layout
+          </p> -->
+          <form class="forms-sample">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input
+                type="text"
+                class="form-control"
+                name="name"
+                placeholder="Name"
+                [(ngModel)]="selectedHospital.title"
+              />
+            </div>
+            <div class="form-group">
+              <label for="district">District</label>
+              <input
+                type="text"
+                class="form-control"
+                name="district"
+                placeholder="District"
+                [(ngModel)]="selectedHospital.district"
+              />
+            </div>
+            <div class="form-group">
+              <label for="contact">Contact</label>
+              <input
+                type="text"
+                class="form-control"
+                name="contact"
+                placeholder="Contact"
+                [(ngModel)]="selectedHospital.contact"
+              />
+            </div>
+            <div class="form-group">
+              <label for="contactPerson">Contact's No.</label>
+              <input
+                type="text"
+                class="form-control"
+                name="contactPerson"
+                placeholder="Contact's No."
+                [(ngModel)]="selectedHospital.contactPerson"
+              />
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-success"
+        (click)="editHospital()"
+        [disabled]="loadingData"
+      >
+        <i class="fa fa-spinner" aria-hidden="true" *ngIf="loadingData"></i>
+        <span *ngIf="!loadingData">Submit</span>
+      </button>
+      <button
+        type="button"
+        class="btn btn-light"
+        (click)="modal.close()"
+        [disabled]="loadingData"
+      >
+        Cancel
+      </button>
+    </div>
+  </div>
+</ng-template>
+<!-- modal ends -->

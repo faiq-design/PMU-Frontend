@@ -1,0 +1,230 @@
+.tableFixHead {
+  max-height: 500px !important;
+  overflow-x: auto !important;
+}
+
+.float {
+  position: fixed !important;
+  width: 60px;
+  height: 60px;
+  // bottom: 40px;
+  right: 40px;
+  text-align: center;
+  z-index: 100;
+}
+
+.my-float {
+  margin-top: 16px;
+}
+
+.table {
+  width: 100%;
+  white-space: nowrap;
+  table-layout: fixed; /* Set the table layout to fixed */
+}
+
+.table thead {
+  position: sticky;
+  top: 0;
+  background-color: #fff; /* Adjust as needed */
+  z-index: 1;
+}
+
+.table th,
+.table td {
+  width: 150px;
+  word-wrap: break-word; /* Allow word wrapping */
+  white-space: normal;
+}
+
+:host ::ng-deep .p-dropdown {
+  width: 100%;
+}
+
+:host ::ng-deep .p-dropdown-label {
+  white-space: normal;
+}
+
+#employees_popup .e-dropdownbase .e-list-item {
+  line-height: 40px;
+  height: 64px;
+}
+
+#employees_popup .head {
+  font-weight: 600;
+  height: 40px;
+  color: rgba(0, 0, 0, 0.54);
+  font-size: 16px;
+  font-family: "Roboto";
+  background-color: #f5f5f5;
+}
+
+#employees_popup .e-dropdownbase .e-list-item {
+  text-indent: 50px;
+}
+
+#employees_popup .empImage {
+  float: left;
+  width: 50px;
+  height: 50px;
+  margin-left: 20px;
+}
+
+#btn {
+  margin-top: 300px;
+}
+
+.photo {
+  margin: 20px;
+}
+
+.emp {
+  margin-left: 140px;
+}
+.ename,
+.empImage {
+  margin: 10px;
+}
+.ename {
+  border-style: solid;
+  border-width: 1px 1px 1px 0;
+  display: table-cell;
+}
+
+/* Decrease the height of the p-autoComplete dropdown */
+::ng-deep .ui-autocomplete-panel {
+  max-height: 20px; /* Adjust the max-height value as needed */
+  overflow-y: auto; /* Enable vertical scrolling if necessary */
+}
+
+.custom-autocomplete .ui-autocomplete-panel {
+  position: absolute !important;
+  top: 100% !important;
+  left: 0 !important;
+}
+
+// .autocomplete-item .heading-row {
+//   font-weight: bold;
+//   color: gray; /* Change text color to indicate disabled state */
+//   pointer-events: none; /* Disable pointer events */
+// }
+
+// /* Transparent overlay to prevent interaction with items below */
+// .overlay {
+//   position: absolute;
+//   top: 0;
+//   left: 0;
+//   width: 100%;
+//   height: 100%;
+//   background-color: transparent;
+//   pointer-events: auto; /* Enable pointer events on the overlay */
+//   z-index: 2; /* Ensure it appears above other items */
+// }
+
+// /* Heading row */
+// .heading-row {
+//   position: absolute;
+//   top: 0;
+//   left: 0;
+//   width: 100%;
+//   background-color: #f0f0f0; /* Optional: Add background color for better visibility */
+//   font-weight: bold;
+//   pointer-events: none; /* Disable pointer events on the heading row */
+//   z-index: 3; /* Ensure it appears on top of the overlay */
+// }
+
+// .dropdown {
+//   position: relative;
+//   display: inline-block;
+// }
+
+// .dropbtn {
+//   background-color: #fff;
+//   color: #000;
+//   border: 1px solid #ccc;
+//   padding: 10px;
+//   font-size: 16px;
+//   cursor: pointer;
+// }
+
+// .dropdown-content {
+//   display: none;
+//   position: absolute;
+//   background-color: #fff;
+//   border: 1px solid #ccc;
+//   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+//   z-index: 1;
+// }
+
+// .dropdown-content .header {
+//   background-color: #f0f0f0;
+//   font-weight: bold;
+// }
+
+// .dropdown-content .item {
+//   padding: 10px;
+//   cursor: pointer;
+// }
+
+// .dropdown-content .item:hover {
+//   background-color: #f9f9f9;
+// }
+
+// .show {
+//   display: block;
+// }
+
+.ng-select.custom {
+  border: 0px !important;
+  min-height: 0px !important;
+  border-radius: 0 !important;
+  background-color: green;
+  // z-index: 999999;
+}
+
+.ng-dropdown-panel {
+  position: absolute !important;
+  z-index: 9999 !important;
+  background-color: pink;
+}
+
+.ng-select.custom .ng-select-container {
+  min-height: 0px !important;
+  border-radius: 0 !important;
+  background-color: red;
+}
+
+.ng-dropdown-panel .scroll-host {
+  overflow: hidden;
+  overflow-y: auto;
+  position: relative;
+  display: block;
+  background-color: black;
+  -webkit-overflow-scrolling: touch;
+}
+
+.ng-dropdown-panel .ng-dropdown-panel-items {
+  display: block;
+  height: auto;
+  box-sizing: border-box;
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.rightAlign {
+  text-align: right;
+}
+
+
+.float {
+  position: fixed !important;
+  width: 100px !important;
+  height: 50px !important;
+  right: 40px;
+  text-align: center;
+  z-index: 100;
+}
+
+.my-float {
+  margin-top: 16px;
+}

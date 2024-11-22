@@ -1,0 +1,20 @@
+<h1 mat-dialog-title>Deployment Details</h1>
+<div mat-dialog-content>
+  <form [formGroup]="deploymentForm">
+    <mat-form-field class="full-width">
+      <input matInput formControlName="deploymentDate" placeholder="Deployment Date" readonly>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <input matInput formControlName="hospitalId" placeholder="Hospital ID">
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <input matInput formControlName="deploymentLocation" placeholder="Deployment Location">
+    </mat-form-field>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-button (click)="onSave()">Save</button>
+</div>

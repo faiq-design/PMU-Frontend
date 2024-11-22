@@ -1,0 +1,1004 @@
+<app-spinner *ngIf="loading"></app-spinner>
+<div class="btn-group-vertical float">
+  <!-- <div ngbDropdown *ngIf="!loading && userInfo.role.title == 'Vendor'">
+    <button
+      style="width: 70px; margin-bottom: 5px"
+      class="btn btn-gradient-success btn-icon"
+      type="button"
+      id="dropdownMenuIconButton1"
+      ngbDropdownToggle
+    >
+      <i class="mdi mdi-plus"></i>
+    </button>
+    <div ngbDropdownMenu aria-labelledby="dropdownMenuIconButton1">
+      <ng-container *ngFor="let id of serviceId">
+        <a class="dropdown-item" (click)="gotoInvoice(id)" *ngIf="id == 1"
+          >MEPG</a
+        >
+        <a class="dropdown-item" (click)="gotoInvoice(id)" *ngIf="id == 2"
+          >CT</a
+        >
+        <a class="dropdown-item" (click)="gotoInvoice(id)" *ngIf="id == 3"
+          >Security</a
+        >
+        <a class="dropdown-item" (click)="gotoInvoice(id)" *ngIf="id == 4"
+          >Laundry</a
+        >
+        <a class="dropdown-item" (click)="gotoInvoice(id)" *ngIf="id == 5"
+          >MHU</a
+        >
+        <a class="dropdown-item" (click)="gotoInvoice(id)" *ngIf="id == 6"
+          >MDU</a
+        >
+        <a class="dropdown-item" (click)="gotoInvoice(id)" *ngIf="id == 7"
+          >Janitorial</a
+        >
+      </ng-container>
+    </div>
+  </div> -->
+
+  <button
+    type="button"
+    class="btn btn-gradient-primary btn-icon"
+    *ngIf="!loading"
+    style="max-height: 48px; width: 70px"
+    (click)="togglePanel()"
+    [disabled]="loading || loadingNew"
+  >
+    <i class="mdi mdi-filter" *ngIf="!loading && !loadingNew"></i>
+    <i class="fa fa-spinner" *ngIf="loading || loadingNew"></i>
+  </button>
+</div>
+
+<div class="row justify-content-center" style="margin-bottom: 20px">
+  <div class="col-lg-1-5 card-button-service" *ngIf="serviceId.length > 1">
+    <div class="card-service gradient-card"     [ngClass]="{
+      'gradient-8': activeButtonId != -1,
+      'selected-button': activeButtonId == -1
+    }">
+      <div class="card-body-service">
+        <button class="btn btn-custom" (click)="filterInvoiceListServiceId(-1)">
+          All
+        </button>
+      </div>
+    </div>
+  </div>
+  <ng-container *ngFor="let id of serviceId">
+    <div class="col-lg-1-5 card-button-service" *ngIf="id == 1">
+      <div class="card-service gradient-card"     [ngClass]="{ 'gradient-1': activeButtonId != 1,
+        'selected-button': activeButtonId == 1
+      }">
+        <div class="card-body-service">
+          <button
+            class="btn btn-custom"
+            (click)="filterInvoiceListServiceId(id)"
+          >
+            MPEG
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-1-5 card-button-service" *ngIf="id == 2">
+      <div class="card-service gradient-card"     [ngClass]="{ 'gradient-2': activeButtonId != 2,
+        'selected-button': activeButtonId == 2
+      }">
+        <div class="card-body-service">
+          <button
+            class="btn btn-custom"
+            (click)="filterInvoiceListServiceId(id)"
+          >
+            CT
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-1-5 card-button-service" *ngIf="id == 3">
+      <div class="card-service gradient-card"     [ngClass]="{
+        'gradient-3': activeButtonId != 3,
+        'selected-button': activeButtonId == 3
+      }">
+        <div class="card-body-service">
+          <button
+            class="btn btn-custom"
+            (click)="filterInvoiceListServiceId(id)"
+          >
+            Security
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-1-5 card-button-service" *ngIf="id == 4">
+      <div class="card-service gradient-card"     [ngClass]="{
+        'gradient-4': activeButtonId != 4,
+        'selected-button': activeButtonId == 4
+      }">
+        <div class="card-body-service">
+          <button
+            class="btn btn-custom"
+            (click)="filterInvoiceListServiceId(id)"
+          >
+            Laundry
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-1-5 card-button-service" *ngIf="id == 5">
+      <div class="card-service gradient-card"     [ngClass]="{
+        'gradient-5': activeButtonId != 5,
+        'selected-button': activeButtonId == 5
+      }">
+        <div class="card-body-service">
+          <button
+            class="btn btn-custom"
+            (click)="filterInvoiceListServiceId(id)"
+          >
+            LFH
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-1-5 card-button-service" *ngIf="id == 6">
+      <div class="card-service gradient-card"     [ngClass]="{
+        'gradient-6': activeButtonId != 6,
+        'selected-button': activeButtonId == 6
+      }">
+        <div class="card-body-service">
+          <button
+            class="btn btn-custom"
+            (click)="filterInvoiceListServiceId(id)"
+          >
+            SFH
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-1-5 card-button-service" *ngIf="id == 7">
+      <div class="card-service gradient-card"     [ngClass]="{
+        'gradient-7': activeButtonId != 7,
+        'selected-button': activeButtonId == 7
+      }">
+        <div class="card-body-service">
+          <button
+            class="btn btn-custom"
+            (click)="filterInvoiceListServiceId(id)"
+          >
+            Janitorial
+          </button>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>
+<div
+  class="row justify-content-center"
+  *ngIf="
+    invoiceList?.length > 0 &&
+    !loading &&
+    (userInfo.role.title == 'Vendor' ||
+      userInfo.role.title == 'Hospital' ||
+      userInfo.role.title == 'Admin' ||
+      userInfo.role.title == 'Developer')
+  "
+>
+  <div
+    class="col-md-3 grid-margin"
+    style="background-color: white; margin: 10px"
+    *ngIf="!statusType || statusType == 'Sent'"
+  >
+    <div class="row justify-content-center">
+      <div
+        class="col-md-12"
+        style="background-color: #5d4037; color: white; padding: 20px"
+      >
+        <div class="row">
+          <div class="col-md-6" style="font-size: larger">Sent</div>
+          <!-- <div class="col-md-6 pr-20 text-right">
+            <div
+              class="badge badge-pill"
+              style="background-color: white; color: black; font-weight: bold"
+            >
+              7
+            </div>
+          </div> -->
+        </div>
+      </div>
+      <ng-container *ngFor="let invoice of invoiceList">
+        <div
+          class="col-md-11 justify-content-center card-new"
+          style="padding: 20px; margin-top: 30px"
+          *ngIf="
+            (!statusType || statusType == 'Sent') &&
+            shouldDisplayInvoice(invoice, 'Sent')
+          "
+          (click)="viewInvoice(invoice)"
+        >
+          <div class="row justify-content-center" style="margin-bottom: 15px">
+            <div class="col-md-12 text-center">
+              <div
+                class="cool-strip"
+                style="
+                  padding: 10px;
+                  border-radius: 10px;
+                  transition: all 0.3s ease;
+                  background: linear-gradient(
+                    to right,
+                    rgba(93, 64, 55, 0.8),
+                    rgba(77, 182, 172, 0.8),
+                    rgba(0, 77, 64, 0.8)
+                  );
+                "
+              >
+                <span
+                  class="strip-text"
+                  style="font-size: 10px; color: #fff; font-weight: bold"
+                  >Invoice Amount: {{ format(invoice.invoiceAmount) }}</span
+                >
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12" style="padding-top: 10px">
+              <div class="row">
+                <div
+                  class="col-md-8"
+                  style="font-weight: bolder; font-size: 13px"
+                >
+                  <img
+                    src="assets/images/vendorremovebg.png"
+                    alt="Icon"
+                    style="width: 20px; height: 20px; margin-right: 5px"
+                  />
+                  {{ invoice.vendor.title }}
+                </div>
+                <div
+                  class="col-md-4 text-right"
+                  style="padding-right: 20px; cursor: pointer; font-size: 13px"
+                >
+                  <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12" style="padding-top: 15px">
+              <div class="row">
+                <div
+                  class="col-md-6"
+                  style="font-weight: bold; font-size: 13px"
+                >
+                  <img
+                    src="assets/images/hospitalremovebg.png"
+                    alt="Icon"
+                    style="width: 20px; height: 20px; margin-right: 5px"
+                  />
+                  {{ invoice.hospital.title }}
+                </div>
+                <div
+                  class="col-md-6 pr-20 text-right"
+                  style="font-weight: bold"
+                >
+                  <span
+                    class="badge badge-gradient-success"
+                    style="padding: 3px; font-size: 13px"
+                    >{{ invoice.invoiceStatus }}</span
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12" style="padding-top: 15px">
+              <div class="row">
+                <div
+                  class="col-md-6"
+                  style="font-weight: bold; font-size: 13px"
+                >
+                  {{ invoice.invoiceNo }}
+                </div>
+                <div
+                  class="col-md-6 pr-20 text-right"
+                  style="font-weight: bold"
+                >
+                  <span
+                    style="
+                      background-color: #ff6b6b;
+                      color: white;
+                      padding: 3px;
+                      font-size: 13px;
+                      border-radius: 5px;
+                    "
+                    >{{ invoice.invoiceDate }}</span
+                  >
+                </div>
+              </div>
+            </div>
+            <div
+              class="col-md-10"
+              style="padding-top: 10px; margin-top: 15px; margin-left: 20px"
+            >
+              <div class="row">
+                <div class="col-md-8">
+                  <div class="row">
+                    <div
+                      class="col-md-3"
+                      style="
+                        padding: 0;
+                        margin: 0;
+                        border-bottom: 4px solid yellow;
+                        padding-right: 3px;
+                      "
+                    ></div>
+                    <div
+                      class="col-md-3"
+                      style="
+                        padding: 0;
+                        margin: 0;
+                        border-bottom: 4px solid blue;
+                      "
+                    ></div>
+                    <div
+                      class="col-md-3"
+                      style="
+                        padding: 0;
+                        margin: 0;
+                        border-bottom: 4px solid orange;
+                      "
+                    ></div>
+                    <div
+                      class="col-md-3"
+                      style="
+                        padding: 0;
+                        margin: 0;
+                        border-bottom: 4px solid brown;
+                      "
+                    ></div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <!-- Content for the second column -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+  <div
+    class="col-md-3 grid-margin"
+    style="background-color: white; margin: 10px"
+    *ngIf="!statusType || statusType == 'Unpaid'"
+  >
+    <div class="row justify-content-center">
+      <div
+        class="col-md-12"
+        style="background-color: #4db6ac; color: white; padding: 20px"
+      >
+        <div class="row">
+          <div class="col-md-6" style="font-size: larger">Unpaid</div>
+          <!-- <div class="col-md-6 pr-20 text-right">
+            <div
+              class="badge badge-pill"
+              style="background-color: white; color: black; font-weight: bold"
+            >
+              7
+            </div>
+          </div> -->
+        </div>
+      </div>
+      <ng-container *ngFor="let invoice of invoiceList">
+        <div
+          class="col-md-11 justify-content-center card-new"
+          style="padding: 20px; margin-top: 30px"
+          *ngIf="
+            (!statusType || statusType == 'Unpaid') &&
+            shouldDisplayInvoice(invoice, 'Unpaid')
+          "
+          (click)="viewInvoice(invoice)"
+        >
+          <div class="row justify-content-center" style="margin-bottom: 15px">
+            <div class="col-md-12 text-center">
+              <div
+                class="cool-strip"
+                style="
+                  padding: 10px;
+                  border-radius: 10px;
+                  transition: all 0.3s ease;
+                  background: linear-gradient(
+                    to right,
+                    rgba(93, 64, 55, 0.8),
+                    rgba(77, 182, 172, 0.8),
+                    rgba(0, 77, 64, 0.8)
+                  );
+                "
+              >
+                <span
+                  class="strip-text"
+                  style="font-size: 10px; color: #fff; font-weight: bold"
+                  >Invoice Amount: {{ format(invoice.invoiceAmount) }}</span
+                >
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12" style="padding-top: 10px">
+              <div class="row">
+                <div
+                  class="col-md-8"
+                  style="font-weight: bolder; font-size: 13px"
+                >
+                  <img
+                    src="assets/images/vendorremovebg.png"
+                    alt="Icon"
+                    style="width: 20px; height: 20px; margin-right: 5px"
+                  />
+                  {{ invoice.vendor.title }}
+                </div>
+                <div
+                  class="col-md-4 text-right"
+                  style="padding-right: 20px; cursor: pointer; font-size: 13px"
+                >
+                  <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12" style="padding-top: 15px">
+              <div class="row">
+                <div
+                  class="col-md-6"
+                  style="font-weight: bold; font-size: 13px"
+                >
+                  <img
+                    src="assets/images/hospitalremovebg.png"
+                    alt="Icon"
+                    style="width: 20px; height: 20px; margin-right: 5px"
+                  />
+                  {{ invoice.hospital.title }}
+                </div>
+                <div
+                  class="col-md-6 pr-20 text-right"
+                  style="font-weight: bold"
+                >
+                  <span
+                    class="badge badge-gradient-success"
+                    style="padding: 3px; font-size: 13px"
+                    >{{ invoice.invoiceStatus }}</span
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12" style="padding-top: 15px">
+              <div class="row">
+                <div
+                  class="col-md-6"
+                  style="font-weight: bold; font-size: 13px"
+                >
+                  {{ invoice.invoiceNo }}
+                </div>
+                <div
+                  class="col-md-6 pr-20 text-right"
+                  style="font-weight: bold"
+                >
+                  <span
+                    style="
+                      background-color: #ff6b6b;
+                      color: white;
+                      padding: 3px;
+                      font-size: 13px;
+                      border-radius: 5px;
+                    "
+                    >{{ invoice.invoiceDate }}</span
+                  >
+                </div>
+              </div>
+            </div>
+            <div
+              class="col-md-10"
+              style="padding-top: 10px; margin-top: 15px; margin-left: 20px"
+            >
+              <div class="row">
+                <div class="col-md-8">
+                  <div class="row">
+                    <div
+                      class="col-md-3"
+                      style="
+                        padding: 0;
+                        margin: 0;
+                        border-bottom: 4px solid yellow;
+                        padding-right: 3px;
+                      "
+                    ></div>
+                    <div
+                      class="col-md-3"
+                      style="
+                        padding: 0;
+                        margin: 0;
+                        border-bottom: 4px solid blue;
+                      "
+                    ></div>
+                    <div
+                      class="col-md-3"
+                      style="
+                        padding: 0;
+                        margin: 0;
+                        border-bottom: 4px solid orange;
+                      "
+                    ></div>
+                    <div
+                      class="col-md-3"
+                      style="
+                        padding: 0;
+                        margin: 0;
+                        border-bottom: 4px solid brown;
+                      "
+                    ></div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <!-- Content for the second column -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+
+  <div
+    class="col-md-3 grid-margin"
+    style="background-color: white; margin: 10px"
+    *ngIf="!statusType || statusType == 'Paid'"
+  >
+    <div class="row justify-content-center">
+      <div
+        class="col-md-12"
+        style="background-color: #004d40; color: white; padding: 20px"
+      >
+        <div class="row">
+          <div class="col-md-6" style="font-size: larger">Paid</div>
+          <!-- <div class="col-md-6 pr-20 text-right">
+            <div
+              class="badge badge-pill"
+              style="background-color: white; color: black; font-weight: bold"
+            >
+              7
+            </div>
+          </div> -->
+        </div>
+      </div>
+      <ng-container *ngFor="let invoice of invoiceList">
+        <div
+          class="col-md-11 justify-content-center card-new"
+          style="padding: 20px; margin-top: 30px"
+          *ngIf="
+            (!statusType || statusType == 'Paid') &&
+            shouldDisplayInvoice(invoice, 'Paid')
+          "
+          (click)="viewInvoice(invoice)"
+        >
+          <div class="row justify-content-center" style="margin-bottom: 15px">
+            <div class="col-md-12 text-center">
+              <div
+                class="cool-strip"
+                style="
+                  padding: 10px;
+                  border-radius: 10px;
+                  transition: all 0.3s ease;
+                  background: linear-gradient(
+                    to right,
+                    rgba(93, 64, 55, 0.8),
+                    rgba(77, 182, 172, 0.8),
+                    rgba(0, 77, 64, 0.8)
+                  );
+                "
+              >
+                <span
+                  class="strip-text"
+                  style="font-size: 10px; color: #fff; font-weight: bold"
+                  >Invoice Amount: {{ format(invoice.invoiceAmount) }}</span
+                >
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12" style="padding-top: 10px">
+              <div class="row">
+                <div
+                  class="col-md-8"
+                  style="font-weight: bolder; font-size: 13px"
+                >
+                  <img
+                    src="assets/images/vendorremovebg.png"
+                    alt="Icon"
+                    style="width: 20px; height: 20px; margin-right: 5px"
+                  />
+                  {{ invoice.vendor.title }}
+                </div>
+                <div
+                  class="col-md-4 text-right"
+                  style="padding-right: 20px; cursor: pointer; font-size: 13px"
+                >
+                  <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12" style="padding-top: 15px">
+              <div class="row">
+                <div
+                  class="col-md-6"
+                  style="font-weight: bold; font-size: 13px"
+                >
+                  <img
+                    src="assets/images/hospitalremovebg.png"
+                    alt="Icon"
+                    style="width: 20px; height: 20px; margin-right: 5px"
+                  />
+                  {{ invoice.hospital.title }}
+                </div>
+                <div
+                  class="col-md-6 pr-20 text-right"
+                  style="font-weight: bold"
+                >
+                  <span
+                    class="badge badge-gradient-success"
+                    style="padding: 3px; font-size: 13px"
+                    >{{ invoice.invoiceStatus }}</span
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12" style="padding-top: 15px">
+              <div class="row">
+                <div
+                  class="col-md-6"
+                  style="font-weight: bold; font-size: 13px"
+                >
+                  {{ invoice.invoiceNo }}
+                </div>
+                <div
+                  class="col-md-6 pr-20 text-right"
+                  style="font-weight: bold"
+                >
+                  <span
+                    style="
+                      background-color: #ff6b6b;
+                      color: white;
+                      padding: 3px;
+                      font-size: 13px;
+                      border-radius: 5px;
+                    "
+                    >{{ invoice.invoiceDate }}</span
+                  >
+                </div>
+              </div>
+            </div>
+            <div
+              class="col-md-10"
+              style="padding-top: 10px; margin-top: 15px; margin-left: 20px"
+            >
+              <div class="row">
+                <div class="col-md-8">
+                  <div class="row">
+                    <div
+                      class="col-md-3"
+                      style="
+                        padding: 0;
+                        margin: 0;
+                        border-bottom: 4px solid yellow;
+                        padding-right: 3px;
+                      "
+                    ></div>
+                    <div
+                      class="col-md-3"
+                      style="
+                        padding: 0;
+                        margin: 0;
+                        border-bottom: 4px solid blue;
+                      "
+                    ></div>
+                    <div
+                      class="col-md-3"
+                      style="
+                        padding: 0;
+                        margin: 0;
+                        border-bottom: 4px solid orange;
+                      "
+                    ></div>
+                    <div
+                      class="col-md-3"
+                      style="
+                        padding: 0;
+                        margin: 0;
+                        border-bottom: 4px solid brown;
+                      "
+                    ></div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <!-- Content for the second column -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>
+
+<div
+  *ngIf="
+    (invoiceList.length > 0 &&
+      !loading &&
+      (userInfo.role.title == 'IC' ||
+        userInfo.role.title == 'Outsource' ||
+        userInfo.role.title == 'Operations' ||
+        userInfo.role.title == 'Audit' ||
+        userInfo.role.title == 'Finance')) ||
+    statusType?.length > 0
+  "
+>
+<div  style="margin-bottom: 20px">
+
+  <div class="cardnew-container">
+    <div class="cardnew" style="background-color:#c2d9ef"(click)="getReceivedInvoices()">
+      <div class="cardnew-icon">
+       <i class="icon-icon11"></i>
+      </div>
+ 
+      <div class="cardnew-content">
+        <h6> Invoices Received</h6>
+        <h5>{{ statusTotals["Received"].totalInvoices }}</h5>
+      </div>
+    </div>
+    <div class="cardnew" style="background-color:#a08164" (click)="getSentInvoices()">
+      <div class="cardnew-icon">
+       <i class="icon-icon1"></i>
+      </div>
+ 
+
+      <div class="cardnew-content">
+        <h6>Invoices Sent</h6>
+        <h5>{{ statusTotals["Sent"].totalInvoices }}</h5>
+      </div>
+    </div>
+    <div class="cardnew" style="background-color:#d8e3bc" (click)="getPendingInvoices()">
+      <div class="cardnew-icon">
+       <i class="icon-icon3"></i>
+      </div>
+ 
+      <div class="cardnew-content">
+        <h6>Invoices Pending</h6>
+        <h5>{{ statusTotals["Pending"].totalInvoices }}</h5>
+      </div>
+    </div>
+  </div>
+</div>
+  <!-- <div class="row justify-content-center">
+    <div
+      class="col-md-3 stretch-card grid-margin"
+      (click)="getReceivedInvoices()"
+    >
+      <div class="card card-summ bg-gradient-info card-img-holder">
+        <div class="card-body">
+          <h4 class="font-weight-normal mb-3">
+            Invoices Received
+            <i class="mdi mdi-call-received mdi-24px float-right"></i>
+          </h4>
+
+          <h2 class="mb-5">{{ statusTotals["Received"].totalInvoices }}</h2>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3 stretch-card grid-margin" (click)="getSentInvoices()">
+      <div class="card card-summ bg-gradient-danger card-img-holder">
+        <div class="card-body">
+          <h4 class="font-weight-normal mb-3">
+            Invoices Sent
+            <i class="mdi mdi-trending-neutral mdi-24px float-right"></i>
+          </h4>
+          <h2 class="mb-5">{{ statusTotals["Sent"].totalInvoices }}</h2>
+        </div>
+      </div>
+    </div>
+    <div
+      class="col-md-3 stretch-card grid-margin"
+      (click)="getPendingInvoices()"
+    >
+      <div class="card card-summ bg-gradient-success card-img-holder">
+        <div class="card-body">
+          <h4 class="font-weight-normal mb-3">
+            Invoices Pending
+            <i class="mdi mdi-reload mdi-24px float-right"></i>
+          </h4>
+          <h2 class="mb-5">{{ statusTotals["Pending"].totalInvoices }}</h2>
+        </div>
+      </div>
+    </div>
+  </div> -->
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Invoice List</h4>
+          <div class="table-responsive pt-3">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Invoice No</th>
+                  <th>Service</th>
+                  <th>Vendor</th>
+                  <th>Hospital</th>
+                  <th>Invoice Date</th>
+                  <th>Invoice Month</th>
+                  <th>Invoice Amount</th>
+                  <th>Status</th>
+                  <th>Details</th>
+                </tr>
+              </thead>
+              <tbody>
+                <ng-container
+                  *ngFor="let invoice of filteredInvoices; let i = index"
+                >
+                  <tr
+                    *ngIf="
+                      userInfo.role.status == invoice.invoiceStatus ||
+                      allowedRoles.includes(invoice.invoiceStatus)
+                    "
+                  >
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ invoice.invoiceNo }}</td>
+                    <td>{{ invoice?.service?.title }}</td>
+                    <td>{{ invoice?.vendor?.title }}</td>
+                    <td>{{ invoice?.hospital.title }}</td>
+                    <td>{{ invoice.invoiceDate }}</td>
+                    <td>{{ invoice.invoiceMonth }}</td>
+                    <td>{{ invoice.invoiceAmount | number : "1.0-0" }}</td>
+                    <td>
+                      <label class="badge badge-success">{{
+                        invoice.invoiceStatus
+                      }}</label>
+                    </td>
+                    <td>
+                      <button
+                        type="button"
+                        class="btn btn-gradient-primary"
+                        (click)="viewInvoice(invoice)"
+                      >
+                        <i class="mdi mdi-arrow-right-bold-circle"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </ng-container>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row" *ngIf="!loading && invoiceList?.length == 0">
+  <div class="col-12 grid-margin">
+    <div class="alert alert-success" role="alert">No Data Found</div>
+  </div>
+</div>
+
+<!-- side-panel.component.html -->
+
+<div class="side-panel" [class.open]="isOpen">
+  <!-- <h5 style="text-align: center">Filters</h5> -->
+  <ng-container>
+    <div style="height: 40px">
+      <button class="close-button" (click)="closePanel()">
+        <i class="fa fa-times"></i>
+        <!-- Font Awesome cross icon -->
+      </button>
+    </div>
+    <div class="p-fluid p-grid p-formgrid">
+      <div class="p-field p-col-12 p-md-2">
+        <h4 style="text-align: center">Filters</h4>
+      </div>
+    </div>
+
+    <!-- <div style="margin-top: 50px;"></div> -->
+
+    <div class="p-fluid p-grid p-formgrid" *ngIf="vendorList?.length > 0">
+      <div class="p-field p-col-12 p-md-2">
+        <label>Vendors</label>
+        <ng-container>
+          <p-dropdown
+            [options]="vendorList"
+            [(ngModel)]="selectedVendor"
+            (ngModelChange)="vendorChange()"
+            optionLabel="title"
+            placeholder="Select a Vendor"
+          ></p-dropdown>
+        </ng-container>
+      </div>
+    </div>
+    <div
+      class="p-fluid p-grid p-formgrid"
+      *ngIf="filteredHospitalList?.length > 0"
+    >
+      <div class="p-field p-col-12 p-md-2">
+        <label>Hospitals</label>
+        <ng-container>
+          <p-dropdown
+            [options]="filteredHospitalList"
+            [(ngModel)]="selectedHospital"
+            (ngModelChange)="vendorChange()"
+            optionLabel="title"
+            placeholder="Select a Hospital"
+          ></p-dropdown>
+        </ng-container>
+      </div>
+    </div>
+
+    <section class="example-section" style="margin-top: 15px">
+      <p-button
+        [disabled]="loading || loadingNew"
+        label="Submit"
+        (click)="getInvoiceDetails(); closePanel()"
+        icon="pi pi-check"
+        iconPos="right"
+      ></p-button>
+    </section>
+  </ng-container>
+  <!-- <button class="close-button" (click)="closePanel()">Close</button> -->
+</div>
+
+<!-- filters working -->
+<p-sidebar
+  [(visible)]="visibleSidebar2"
+  position="right"
+  [baseZIndex]="10000"
+  [style]="{ width: '25em', height: '100vh', backgroundColor: 'smokewhite' }"
+>
+  <h5 style="text-align: center">Filters</h5>
+  <ng-container>
+    <div style="margin-top: 50px"></div>
+
+    <div class="p-fluid p-grid p-formgrid" *ngIf="vendorList?.length > 0">
+      <div class="p-field p-col-12 p-md-2">
+        <label>Vendors</label>
+        <ng-container>
+          <p-dropdown
+            [options]="vendorList"
+            [(ngModel)]="selectedVendor"
+            (ngModelChange)="vendorChange()"
+            optionLabel="title"
+            placeholder="Select a Vendor"
+          ></p-dropdown>
+        </ng-container>
+      </div>
+    </div>
+    <div
+      class="p-fluid p-grid p-formgrid"
+      *ngIf="filteredHospitalList?.length > 0"
+    >
+      <div class="p-field p-col-12 p-md-2">
+        <label>Hospitals</label>
+        <ng-container>
+          <p-dropdown
+            [options]="filteredHospitalList"
+            [(ngModel)]="selectedHospital"
+            (ngModelChange)="vendorChange()"
+            optionLabel="title"
+            placeholder="Select a Hospital"
+          ></p-dropdown>
+        </ng-container>
+      </div>
+    </div>
+
+    <section class="example-section">
+      <p-button
+        [disabled]="loading || loadingNew"
+        label="Submit"
+        (click)="getInvoiceDetails()"
+        icon="pi pi-check"
+        iconPos="right"
+      ></p-button>
+    </section>
+  </ng-container>
+</p-sidebar>

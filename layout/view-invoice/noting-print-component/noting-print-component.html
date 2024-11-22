@@ -1,0 +1,56 @@
+ <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Invoice Processing Recommendation</title>
+        <style>
+            /* Minor styling to maintain spacing and text size */
+            body {
+                font-family: monospace; /* Assuming typewriter-like font for spacing */
+                font-size: 16px;
+                line-height: 1.5;
+            }
+            .title {
+                font-weight: bold;
+                text-decoration: underline; /* Simulate underline */
+                color: red;
+            }
+            .signature{
+              font-weight: bold;
+            }
+            .container{
+              margin: 30px;
+            }
+            .right-align {
+                text-align: right;
+            }
+            .labelText{
+              color: blue;
+            }
+        </style>
+    </head>
+    <body>
+    <div class="container"> 
+      <p><span class="labelText"> {{this.invoice}} </span></p>
+        <p class="title" style="color: red;">SUBJECT: MONTHLY INVOICE OF <span class="labelText"> {{this.invoice.vendor.title}}</span> AGAINST
+         OUTSOURCED SECURITY SERVICES
+         PERTAINING TO DHQ/THQ HOSPITAL <span class="labelText"> {{this.invoice.hospital.title}} </span> FOR 
+         THE MONTH OF <span class="labelText"> {{this.getMonth(this.invoice.invoiceMonth)}} </span></p>
+        <p>&nbsp;</p>
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The subject invoice worth Rs
+         <span class="labelText"> {{this.invoice.invoiceAmount}} </span> was submitted by
+         the service provider and same has been examined, scrutinized and verified by Admin Officer, Finance 
+         & Budget Officer, HR & Legal Officer, IT Statistical Officer and the Medical Suprintendent of the said hospital.</p>
+        <p>2.   The Medical Suprintendent, after deduction of Rs ____ as penalties has recommended the amount
+         worth Rs ____ for payment to the service provider.</p>
+        <p>3.   Submitted for <span class="labelText" style="color: red;">further processing and necessary action </span> please.</p>
+        <p class="right-align signature" >PROJECT OFFICER(OPERATIONS)</p>
+        <br>
+        <p class="signature">4.DIRECTOR OPERATIONS</p>
+        <br>
+        <p class="signature">5.DIRECTOR OUTSOURCING</p>
+        
+</div>
+    </body>
+    </html>

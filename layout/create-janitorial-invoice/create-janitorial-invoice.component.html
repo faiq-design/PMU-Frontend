@@ -1,0 +1,839 @@
+<app-spinner *ngIf="loadingPage"></app-spinner>
+<ng-container *ngIf="!loadingPage">
+  <div class="page-header">
+    <h3 class="page-title">Create Invoice</h3>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="javascript:;" (click)="navigate()">Invoice Summary</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+          Create Invoice
+        </li>
+      </ol>
+    </nav>
+  </div>
+  <div class="row">
+    <div class="col-12 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <form class="forms-sample" [formGroup]="invoiceForm">
+            <div class="row">
+              <div class="col-lg-4">
+                <div class="form-group">
+                  <label><strong>Vendor:</strong> </label>
+                  <p>{{ userInfo.vendor.title }}</p>
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <div class="form-group">
+                  <label><strong>S Tax No:</strong> </label>
+                  <p>{{ userInfo.vendor.sTaxNo }}</p>
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <div class="form-group">
+                  <label><strong>Ntn:</strong></label>
+                  <p>{{ userInfo.vendor.ntn }}</p>
+                </div>
+              </div>
+
+              <div class="col-lg-4">
+                <div class="form-group">
+                  <label>Invoice Date</label>
+                  <span class="text-danger">*</span>
+                  <input
+                    type="date"
+                    class="form-control"
+                    formControlName="invoiceDate"
+                    readonly
+                  />
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <div class="form-group">
+                  <label>Invoice Month</label>
+                  <span class="text-danger">*</span>
+                  <input
+                    type="month"
+                    (change)="getInvoiceNumber()"
+                    class="form-control"
+                    formControlName="invoiceMonth"
+                  />
+                </div>
+              </div>
+
+              <div
+                class="col-lg-4"
+                *ngIf="invoiceForm.controls.invoiceNo.value"
+              >
+                <div class="form-group">
+                  <label>Invoice No</label>
+                  <span class="text-danger">*</span>
+                  <input
+                    class="form-control"
+                    formControlName="invoiceNo"
+                    readonly
+                  />
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <div class="form-group">
+                  <label>Hospital</label>
+                  <span class="text-danger">*</span>
+                  <!-- <select
+                    class="form-control"
+                    (change)="addAutoService()"
+                    formControlName="hospitalId"
+                  >
+                    <option value="-1"></option>
+                    <ng-container *ngFor="let hospital of hospitalList">
+                      <option [value]="hospital.id">
+                        {{ hospital.title }}
+                      </option>
+                    </ng-container>
+                  </select> -->
+
+                  <p-dropdown
+                    placeholder="Select a Hospital"
+                    appendTo="body"
+                    [options]="hospitalList"
+                    optionLabel="title"
+                    optionValue="id"
+                    formControlName="hospitalId"
+                    [filter]="true"
+                    filterBy="value.title"
+                    (onChange)="addAutoService()"
+                  >
+                  </p-dropdown>
+                </div>
+              </div>
+
+              <div
+                class="col-lg-4"
+                *ngIf="invoiceForm.controls.hospitalId.value.id > 0"
+              >
+                <div class="form-group">
+                  <label>Package Information</label>
+                  <input
+                    class="form-control"
+                    formControlName="packageInfo"
+                    readonly
+                  />
+                </div>
+              </div>
+
+              <div class="col-lg-4">
+                <div class="form-group">
+                  <label>Remarks</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    formControlName="remarks"
+                  />
+                </div>
+              </div>
+              <ng-container
+                *ngIf="invoiceForm.controls.hospitalId.value.id > 0"
+              >
+                <div class="col-lg-4">
+                  <div class="form-group">
+                    <label>Invoice Amount</label>
+                    <input
+                    appFormatNumberNew
+                      class="form-control rightAlign"
+                      formControlName="invoiceAmountWithoutTax"
+                      readonly
+                    />
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <div class="form-group">
+                    <label>Tax Amount</label>
+                    <input
+                    appFormatNumberNew
+                      class="form-control rightAlign"
+                      formControlName="invoiceTaxAmount"
+                      readonly
+                    />
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <div class="form-group">
+                    <label>Net Amount</label>
+                    <input
+                    appFormatNumberNew
+                      class="form-control rightAlign"
+                      formControlName="invoiceAmount"
+                      readonly
+                    />
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+            <br />
+
+            <ngb-tabset
+              type="pills"
+              class="pills-success"
+              *ngIf="invoiceForm.controls.hospitalId.value.id > 0"
+            >
+
+            <ngb-tab title="Auto Services">
+              <ng-template ngbTabContent>
+                <div class="row">
+                  <div class="col-lg-12 grid-margin stretch-card">
+                    <!-- <button
+                      type="button"
+                      class="btn btn-gradient-info btn-rounded btn-icon float"
+                      (click)="addNewService()"
+                    >
+                      <i class="mdi mdi-plus my-float"></i>
+                    </button> -->
+                    <div class="table-responsive tableFixHead">
+                      <table
+                        class="table table-bordered"
+                        formArrayName="details"
+                      >
+                        <thead>
+                          <tr class="table-success">
+                            <td style="width: 50px !important">Sr</td>
+                            <td style="width: 200px !important">Category</td>
+                            <td style="width: 300px !important">Service</td>
+                            <!-- <td style="width: 250px !important">Asset</td> -->
+                            <!-- <td style="width: 250px !important">
+                              Complaint No.
+                            </td> -->
+                            <td style="width: 150px !important">Qty</td>
+                            <td>Total Amount</td>
+                            <td style="width: 100px !important">Tax %</td>
+                            <td>Tax Amount</td>
+                            <td>Net Amount</td>
+                            <td>Action</td>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr
+                            *ngFor="
+                              let item of invServices.controls;
+                              let i = index
+                            "
+                            [formGroupName]="i"
+                          >
+                            <td style="width: 50px !important">
+                              {{ i + 1 }}
+                            </td>
+
+                            <td style="width: 200px !important">
+                              <ng-container
+                                *ngIf="item.get('auto').value == 'Y'"
+                              >
+                                <input
+                                  type="text"
+                                  class="form-control"
+                                  formControlName="category"
+                                  style="white-space: normal"
+                                  readonly
+                                />
+                              </ng-container>
+                              <!-- <ng-container
+                                *ngIf="item.get('auto').value == 'N'"
+                              >
+                                <p-dropdown
+                                  placeholder="Select Category"
+                                  appendTo="body"
+                                  [options]="distinctCategories"
+                                  optionLabel="name"
+                                  optionValue="name"
+                                  [filter]="true"
+                                  filterBy="value.name"
+                                  (onChange)="getCategoryServices($event, i)"
+                                >
+                                </p-dropdown>
+                              </ng-container> -->
+                            </td>
+
+                            <td style="width: 300px !important">
+                              <ng-container
+                                *ngIf="item.get('auto').value == 'Y'"
+                              >
+                                <input
+                                  type="text"
+                                  class="form-control"
+                                  formControlName="serviceDetailTitle"
+                                  style="white-space: normal"
+                                  readonly
+                                />
+                              </ng-container>
+                              <!-- <ng-container
+                                *ngIf="item.get('auto').value == 'N'"
+                              >
+                                <p-dropdown
+                                  placeholder="Select a Service"
+                                  appendTo="body"
+                                  [options]="rowCategoryServices[i]"
+                                  optionLabel="title"
+                                  optionValue="id"
+                                  formControlName="serviceDetailId"
+                                  [filter]="true"
+                                  filterBy="value.title,value.amount"
+                                  (onChange)="handleDropdownChange(i, $event)"
+                                >
+                                </p-dropdown>
+                              </ng-container> -->
+                            </td>
+
+                            <!-- <td style="width: 250px !important">
+                              <ng-container
+                                *ngIf="item.get('auto').value == 'Y'"
+                              >
+                                <input
+                                  type="text"
+                                  class="form-control"
+                                  value="NA"
+                                  style="white-space: normal"
+                                  readonly
+                                />
+                              </ng-container>
+                              <ng-container
+                                *ngIf="item.get('auto').value == 'N'"
+                              >
+                                <p-dropdown
+                                  placeholder="Select Asset"
+                                  appendTo="body"
+                                  [options]="filteredHospitalAssets"
+                                  optionLabel="title"
+                                  optionValue="hospitalAssetId"
+                                  formControlName="hospitalAssetId"
+                                  [filter]="true"
+                                  filterBy="value.title"
+                                >
+                                </p-dropdown>
+                              </ng-container>
+                            </td> -->
+
+                            <!-- <td style="width: 250px !important">
+                              <ng-container
+                                *ngIf="item.get('auto').value == 'Y'"
+                              >
+                                <input
+                                  type="text"
+                                  class="form-control"
+                                  value="NA"
+                                  style="white-space: normal"
+                                  readonly
+                                />
+                              </ng-container>
+                              <ng-container
+                                *ngIf="item.get('auto').value == 'N'"
+                              >
+                                <p-dropdown
+                                  placeholder="Select Complaint"
+                                  appendTo="body"
+                                  [options]="complaintList"
+                                  optionLabel="complaintNo"
+                                  optionValue="id"
+                                  formControlName="complaintId"
+                                  [filter]="true"
+                                  filterBy="value.complaintNo"
+                                >
+                                </p-dropdown>
+                              </ng-container>
+                            </td> -->
+                            <td style="width: 150px !important">
+                              <input
+                                class="form-control rightAlign"
+                                type="number"
+                                formControlName="qty"
+                                [readonly]="item.get('auto').value == 'Y'"
+                                (input)="changeNetAmount(i)"
+                              />
+                            </td>
+                            <td>
+                              <input
+                              appFormatNumberNew
+                                class="form-control rightAlign"
+                                formControlName="amount"
+                                readonly
+                              />
+                            </td>
+                            <td style="width: 100px !important">
+                              <input
+                                class="form-control rightAlign"
+                                formControlName="taxPercentage"
+                                readonly
+                              />
+                            </td>
+                            <td>
+                              <input
+                              appFormatNumberNew
+                                class="form-control rightAlign"
+                                formControlName="taxAmount"
+                                readonly
+                              />
+                            </td>
+                            <td style="text-align: right">
+                              <input
+                              appFormatNumberNew
+                                class="form-control rightAlign"
+                                formControlName="netAmount"
+                                readonly
+                              />
+                            </td>
+                            <td>
+                              <button
+                                type="button"
+                                class="btn btn-gradient-danger"
+                                (click)="deleteService(i)"
+                              >
+                                <i class="mdi mdi-delete-forever"></i>
+                              </button>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <br />
+                      <button
+                        [disabled]="loading || !invoiceForm.valid"
+                        class="btn btn-success"
+                        (click)="createInvoice(invoiceForm.value)"
+                      >
+                        <span *ngIf="!loading">Create Invoice</span>
+                        <span *ngIf="loading">
+                          <i class="fa fa-spinner fa-spin"></i>
+                          Creating Invoice...
+                        </span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </ng-template>
+            </ngb-tab>
+              <ngb-tab title="Invoice Detail">
+                <ng-template ngbTabContent>
+                  <div class="row">
+                    <div class="col-lg-12 grid-margin stretch-card">
+                      <!-- <button
+                        type="button"
+                        class="btn btn-gradient-info btn-rounded btn-icon float"
+                        (click)="addNewService()"
+                      >
+                        <i class="mdi mdi-plus my-float"></i>
+                      </button> -->
+                      <div class="table-responsive tableFixHead">
+                        <table
+                          class="table table-bordered"
+                          formArrayName="details"
+                        >
+                          <thead>
+                            <tr class="table-success">
+                              <td style="width: 50px !important">Sr</td>
+                              <td style="width: 200px !important">Category</td>
+                              <td style="width: 300px !important">Service</td>
+                              <!-- <td style="width: 250px !important">Asset</td> -->
+                              <!-- <td style="width: 250px !important">
+                                Complaint No.
+                              </td> -->
+                              <td style="width: 150px !important">Qty</td>
+                              <td>Total Amount</td>
+                              <td style="width: 100px !important">Tax %</td>
+                              <td>Tax Amount</td>
+                              <td>Net Amount</td>
+                              <td>Action</td>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr
+                              *ngFor="
+                                let item of invServices.controls;
+                                let i = index
+                              "
+                              [formGroupName]="i"
+                            >
+                              <td style="width: 50px !important">
+                                {{ i + 1 }}
+                              </td>
+
+                              <td style="width: 200px !important">
+                                <!-- <ng-container
+                                  *ngIf="item.get('auto').value == 'Y'"
+                                >
+                                  <input
+                                    type="text"
+                                    class="form-control"
+                                    formControlName="category"
+                                    style="white-space: normal"
+                                    readonly
+                                  />
+                                </ng-container> -->
+                                <ng-container
+                                  *ngIf="item.get('auto').value == 'N'"
+                                >
+                                  <p-dropdown
+                                    placeholder="Select Category"
+                                    appendTo="body"
+                                    [options]="distinctCategories"
+                                    optionLabel="name"
+                                    optionValue="name"
+                                    [filter]="true"
+                                    filterBy="value.name"
+                                    (onChange)="getCategoryServices($event, i)"
+                                  >
+                                  </p-dropdown>
+                                </ng-container>
+                              </td>
+
+                              <td style="width: 300px !important">
+                                <!-- <ng-container
+                                  *ngIf="item.get('auto').value == 'Y'"
+                                >
+                                  <input
+                                    type="text"
+                                    class="form-control"
+                                    formControlName="serviceDetailTitle"
+                                    style="white-space: normal"
+                                    readonly
+                                  />
+                                </ng-container> -->
+                                <ng-container
+                                  *ngIf="item.get('auto').value == 'N'"
+                                >
+                                  <p-dropdown
+                                    placeholder="Select a Service"
+                                    appendTo="body"
+                                    [options]="rowCategoryServices[i]"
+                                    optionLabel="title"
+                                    optionValue="id"
+                                    formControlName="serviceDetailId"
+                                    [filter]="true"
+                                    filterBy="value.title,value.amount"
+                                    (onChange)="handleDropdownChange(i, $event)"
+                                  >
+                                  </p-dropdown>
+                                </ng-container>
+                              </td>
+
+                              <!-- <td style="width: 250px !important">
+                                <ng-container
+                                  *ngIf="item.get('auto').value == 'Y'"
+                                >
+                                  <input
+                                    type="text"
+                                    class="form-control"
+                                    value="NA"
+                                    style="white-space: normal"
+                                    readonly
+                                  />
+                                </ng-container>
+                                <ng-container
+                                  *ngIf="item.get('auto').value == 'N'"
+                                >
+                                  <p-dropdown
+                                    placeholder="Select Asset"
+                                    appendTo="body"
+                                    [options]="filteredHospitalAssets"
+                                    optionLabel="title"
+                                    optionValue="hospitalAssetId"
+                                    formControlName="hospitalAssetId"
+                                    [filter]="true"
+                                    filterBy="value.title"
+                                  >
+                                  </p-dropdown>
+                                </ng-container>
+                              </td> -->
+
+                              <!-- <td style="width: 250px !important">
+                                <ng-container
+                                  *ngIf="item.get('auto').value == 'Y'"
+                                >
+                                  <input
+                                    type="text"
+                                    class="form-control"
+                                    value="NA"
+                                    style="white-space: normal"
+                                    readonly
+                                  />
+                                </ng-container>
+                                <ng-container
+                                  *ngIf="item.get('auto').value == 'N'"
+                                >
+                                  <p-dropdown
+                                    placeholder="Select Complaint"
+                                    appendTo="body"
+                                    [options]="complaintList"
+                                    optionLabel="complaintNo"
+                                    optionValue="id"
+                                    formControlName="complaintId"
+                                    [filter]="true"
+                                    filterBy="value.complaintNo"
+                                  >
+                                  </p-dropdown>
+                                </ng-container>
+                              </td> -->
+                              <td style="width: 150px !important">
+                                <input
+                                  class="form-control rightAlign"
+                                  type="number"
+                                  formControlName="qty"
+                                  [readonly]="item.get('auto').value == 'Y'"
+                                  (input)="changeNetAmount(i)"
+                                />
+                              </td>
+                              <td>
+                                <input
+                                appFormatNumberNew
+                                  class="form-control rightAlign"
+                                  formControlName="amount"
+                                  readonly
+                                />
+                              </td>
+                              <td style="width: 100px !important">
+                                <input
+                                  class="form-control rightAlign"
+                                  formControlName="taxPercentage"
+                                  readonly
+                                />
+                              </td>
+                              <td>
+                                <input
+                                appFormatNumberNew
+                                  class="form-control rightAlign"
+                                  formControlName="taxAmount"
+                                  readonly
+                                />
+                              </td>
+                              <td style="text-align: right">
+                                <input
+                                appFormatNumberNew
+                                  class="form-control rightAlign"
+                                  formControlName="netAmount"
+                                  readonly
+                                />
+                              </td>
+                              <td>
+                                <button
+                                  type="button"
+                                  class="btn btn-gradient-danger"
+                                  (click)="deleteService(i)"
+                                >
+                                  <i class="mdi mdi-delete-forever"></i>
+                                </button>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-lg-12">
+                        <br />
+                        <button
+                          [disabled]="loading || !invoiceForm.valid"
+                          class="btn btn-success"
+                          (click)="createInvoice(invoiceForm.value)"
+                        >
+                          <span *ngIf="!loading">Create Invoice</span>
+                          <span *ngIf="loading">
+                            <i class="fa fa-spinner fa-spin"></i>
+                            Creating Invoice...
+                          </span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </ng-template>
+              </ngb-tab>
+
+              <ngb-tab title="Documents Attached">
+                <ng-template ngbTabContent>
+                  <div class="media">
+                    <div class="media-body">
+                      <div class="row" *ngIf="remarkTypes.length > 0">
+                        <div class="col-md-12">
+                          <div class="form-group" formArrayName="documents">
+                            <div class="row">
+                              <ng-container
+                                *ngFor="
+                                  let remark of remarkTypes;
+                                  let i = index
+                                "
+                              >
+                                <ng-container *ngIf="remark.id == 1">
+                                  <ng-container
+                                    *ngFor="let docRemarks of remark.remarks"
+                                  >
+                                    <div class="col-md-3">
+                                      <div class="form-check">
+                                        <label class="form-check-label">
+                                          <input
+                                            type="checkbox"
+                                            class="form-check-input"
+                                            [checked]="
+                                              checkedStates[docRemarks.id]
+                                            "
+                                            (change)="
+                                              onCheckboxChange(
+                                                docRemarks.id,
+                                                $event.target.checked
+                                              )
+                                            "
+                                          />
+                                          {{ docRemarks.description }}
+                                          <i class="input-helper"></i>
+                                        </label>
+                                      </div>
+                                    </div>
+                                  </ng-container>
+                                </ng-container>
+                              </ng-container>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </ng-template>
+              </ngb-tab>
+
+              <!-- <ngb-tab title="Penalties">
+                <ng-template ngbTabContent>
+                  <div class="row" style="margin-bottom: 10px">
+                    <div
+                      class="col-lg-12"
+                      style="
+                        text-align: right;
+                        justify-content: end;
+                        align-items: end;
+                      "
+                    >
+                      <button
+                        type="button"
+                        class="btn btn-gradient-info d btn-icon"
+                        style="float: right"
+                        (click)="addNewPanelty()"
+                      >
+                        <i class="mdi mdi-plus"></i>
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-lg-12 grid-margin stretch-card">
+                      <div class="table-responsive tableFixHead">
+                        <table
+                          class="table table-bordered"
+                          formArrayName="panelties"
+                        >
+                          <thead>
+                            <tr class="table-success">
+                              <th>#</th>
+                              <th>Penalty</th>
+                              <th>Amount</th>
+                              <th>Remark</th>
+                              <th>Action</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr
+                              *ngFor="
+                                let item of paneltyServices.controls;
+                                let i = index
+                              "
+                              [formGroupName]="i"
+                            >
+                              <td>{{ i + 1 }}</td>
+                              <td>
+                                <p-dropdown
+                                  placeholder="Select a Panelty"
+                                  appendTo="body"
+                                  [options]="penaltyRemarks"
+                                  optionLabel="description"
+                                  optionValue="id"
+                                  formControlName="remarkId"
+                                  [filter]="true"
+                                  filterBy="value.description"
+                                >
+                                </p-dropdown>
+                              </td>
+                              <td style="text-align: right">
+                                <input
+                                  type="number"
+                                  class="form-control rightAlign"
+                                  formControlName="amount"
+                                  (input)="calculateTotalAmount()"
+                                />
+                              </td>
+                              <td>
+                                <input
+                                  class="form-control"
+                                  formControlName="remarks"
+                                  type="text"
+                                />
+                              </td>
+                              <td>
+                                <button
+                                  type="button"
+                                  class="btn btn-gradient-danger"
+                                  (click)="deletePanelty(i)"
+                                >
+                                  <i class="mdi mdi-delete-forever"></i>
+                                </button>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </ng-template>
+              </ngb-tab> -->
+            </ngb-tabset>
+
+            <br />
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- <ng-select
+
+
+
+   <ng-select 
+    [items]="cities"
+    bindLabel="name"
+    bindValue="location"
+    [searchFn]="customSearchFn"
+    [(ngModel)]="selectedLocation"
+  >
+  </ng-select>
+
+  <hr />
+
+
+
+  <ng-select [items]="cities" bindLabel="name" [searchFn]="customSearchFn" style="background-color: red;">
+    <ng-template>
+      <small>NAME&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</small>
+      <small>LOCATION</small>
+    </ng-template>
+    <ng-template ng-option-tmp let-item="item">
+      <small
+        >{{ item.name }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</small
+      >
+      <small
+        >{{
+          item.isActive
+        }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</small
+      >
+      <small>{{ item.location }}</small>
+    </ng-template>
+  </ng-select> --></ng-container
+>

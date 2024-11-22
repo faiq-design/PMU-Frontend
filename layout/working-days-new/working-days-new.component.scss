@@ -1,0 +1,86 @@
+h3 {
+  margin: 0 0 10px;
+}
+
+pre {
+  background-color: #f5f5f5;
+  padding: 15px;
+}
+
+/* Hide the default day names */
+.cal-header {
+  display: none !important;
+}
+
+.custom-day-names {
+  display: flex;
+  justify-content: space-between; /* Adjust alignment as needed */
+}
+
+.custom-day-name {
+  width: 14%;
+  /* border: 2px solid; */
+  text-align: center; /* Center text horizontally */
+  display: flex;
+  justify-content: center; /* Center text vertically */
+  align-items: center;
+}
+
+.day-cell {
+  position: relative;
+  height: 100px; /* Adjust the height as needed */
+  overflow: hidden; /* Ensure content stays within bounds */
+  height: 140px !important;
+}
+
+.date-number {
+  font-weight: bold;
+  text-align: right;
+  position: relative;
+  transform: translate(-10%, 10%); /* Move date left and down */
+}
+
+.event-title {
+  position: absolute;
+  bottom: 5px; /* Align near the bottom */
+  left: 5px; /* Ensure it's within bounds */
+  right: 5px;
+  color: green; /* Set the font color to green */
+  overflow: hidden; /* Ensure content doesn't overflow */
+  font-size: 13px;
+}
+
+
+.bg-green {
+ //  background-color: #dff0d8 !important;
+  background-color: white !important;
+  cursor: pointer;
+}
+
+.bg-red {
+  background-color: #f2dede !important;
+}
+
+.bg-gray {
+  background-color: #e0e0e0 !important;
+}
+
+.non-editable {
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+.day-with-event{
+  // background-color:#375167;
+  background-color:red;
+  color: white;
+  padding: 3px;
+  border-radius: 10px;
+}
+
+// .day-without-event{
+//   background-color: red;
+//   color: white;
+//   padding: 3px;
+//   border-radius: 10px;
+// }

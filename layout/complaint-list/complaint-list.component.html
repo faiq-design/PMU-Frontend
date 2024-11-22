@@ -1,0 +1,192 @@
+<app-spinner *ngIf="loading"></app-spinner>
+<div class="btn-group-vertical float">
+  <!-- <div ngbDropdown *ngIf="!loading && userInfo.role.title == 'Hospital'">
+    <button
+      style="width: 70px; margin-bottom: 5px"
+      class="btn btn-gradient-success btn-icon"
+      type="button"
+      id="dropdownMenuIconButton1"
+      ngbDropdownToggle
+    >
+      <i class="mdi mdi-plus"></i>
+    </button>
+    <div ngbDropdownMenu aria-labelledby="dropdownMenuIconButton1">
+      <ng-container *ngFor="let id of serviceId">
+        <a
+          class="dropdown-item"
+          (click)="gotoCreateComplaint(id)"
+          *ngIf="id == 1"
+          >MEPG</a
+        >
+        <a
+          class="dropdown-item"
+          (click)="gotoCreateComplaint(id)"
+          *ngIf="id == 2"
+          >CT</a
+        >
+        <a
+          class="dropdown-item"
+          (click)="gotoCreateComplaint(id)"
+          *ngIf="id == 3"
+          >Security</a
+        >
+        <a
+          class="dropdown-item"
+          (click)="gotoCreateComplaint(id)"
+          *ngIf="id == 4"
+          >Laundry</a
+        >
+        <a
+          class="dropdown-item"
+          (click)="gotoCreateComplaint(id)"
+          *ngIf="id == 5"
+          >MHU</a
+        >
+        <a
+          class="dropdown-item"
+          (click)="gotoCreateComplaint(id)"
+          *ngIf="id == 6"
+          >MDU</a
+        >
+        <a
+          class="dropdown-item"
+          (click)="gotoCreateComplaint(id)"
+          *ngIf="id == 7"
+          >Janitorial</a
+        >
+      </ng-container>
+    </div>
+  </div> -->
+  <div *ngIf="!loading && userInfo.role.title == 'Hospital'">
+    <button
+      style="width: 70px; margin-bottom: 5px"
+      class="btn btn-gradient-success btn-icon"
+      type="button"
+      (click)="gotoCreateComplaint(1)"
+    >
+      <i class="mdi mdi-plus"></i>
+    </button>
+  </div>
+  <button
+    type="button"
+    class="btn btn-gradient-primary btn-icon"
+    *ngIf="!loading"
+    style="max-height: 48px; width: 70px"
+  >
+    <i class="mdi mdi-filter"></i>
+  </button>
+</div>
+
+<div>
+  <div  style="margin: 0 auto 20px;
+    max-width: 80%;">
+
+    <div class="cardnew-container">
+      <div class="cardnew" style="background-color:#c2d9ef">
+        <div class="cardnew-icon">
+         <i class="icon-icon11"></i>
+        </div>
+   
+        <div class="cardnew-content">
+          <h6>Total</h6>
+           <h5>{{ totalCount  }}</h5> 
+        </div>
+      </div>
+      <div class="cardnew" style="background-color:#a08164" >
+        <div class="cardnew-icon">
+         <i class="icon-icon1"></i>
+        </div>
+   
+
+        <div class="cardnew-content">
+          <h6>Created</h6>
+           <h5>{{ createdCount  }}</h5> 
+        </div>
+      </div>
+      <div class="cardnew" style="background-color:#d8e3bc">
+        <div class="cardnew-icon">
+         <i class="icon-icon3"></i>
+        </div>
+   
+        <div class="cardnew-content">
+          <h6>Resolved</h6>
+          <h5>{{ resolvedCount  }}</h5> 
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div class="col-lg-12 grid-margin stretch-card">
+  <div class="card">
+    <div class="card-body">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+      <h4 class="card-title">Complaint List</h4>
+      <button
+      type="button"
+      class="btn btn-gradient-info btn-rounded btn-icon"
+      (click)="getComplaintDetails()"
+      [disabled]="loading"
+    >
+      <i class="mdi mdi-refresh"></i>
+    </button>
+    </div>
+      <div
+        class="table-responsive pt-3"
+        *ngIf="complaintList.length > 0 && !loading"
+      >
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Complaint No</th>
+              <th>Service</th>
+              <!-- <th>Vendor</th> -->
+              <th>Hospital</th>
+              <th>Complaint Date</th>
+              <!-- <th>Complaint Month</th> -->
+              <!-- <th>Complaint Amount</th> -->
+              <th>Status</th>
+              <th>Details</th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container
+              *ngFor="let complaint of complaintList; let i = index"
+            >
+              <tr>
+                <td>{{ i + 1 }}</td>
+                <td>{{ complaint.complaintNo }}</td>
+                <td>{{ complaint?.service?.title }}</td>
+                <!-- <td>{{ complaint?.vendor?.title }}</td> -->
+                <td>{{ complaint?.hospital?.title }}</td>
+                <td>{{ complaint.complaintDate }}</td>
+                <!-- <td>{{ complaint.complaintMonth }}</td> -->
+                <!-- <td>{{ complaint.complaintAmount | number : "1.0-0" }}</td> -->
+                <td>
+                  <label class="badge badge-success">{{
+                    complaint.complaintStatus
+                  }}</label>
+                </td>
+                <td>
+                  <button
+                    type="button"
+                    class="btn btn-gradient-danger"
+                    (click)="viewComplaint(complaint)"
+                  >
+                    <i class="mdi mdi-arrow-right-bold-circle"></i>
+                  </button>
+                </td>
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<div class="row" *ngIf="!loading && complaintList?.length == 0">
+  <div class="col-12 grid-margin">
+    <div class="alert alert-success" role="alert">No Data Found</div>
+  </div>
+</div>

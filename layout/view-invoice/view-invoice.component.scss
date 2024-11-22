@@ -1,0 +1,183 @@
+.tableFixHead {
+  // max-height: 500px !important;
+  overflow-x: auto !important;
+}
+
+.table {
+  width: 100%;
+  white-space: nowrap;
+  table-layout: fixed; /* Set the table layout to fixed */
+}
+
+.table thead {
+  position: sticky;
+  top: 0;
+  background-color: #fff; /* Adjust as needed */
+  z-index: 1;
+}
+
+.table th,
+.table td {
+  width: 150px;
+  word-wrap: break-word; /* Allow word wrapping */
+  white-space: normal;
+}
+
+
+.float {
+  position: fixed !important;
+  width: 60px;
+  height: 60px;
+  right: 40px;
+  bottom: 40px;
+  text-align: center;
+  z-index: 100;
+}
+
+
+@media print {
+  @page {
+    size: A0; /* Set the page size to A4 */
+    /* You can also specify other page sizes such as 'letter', 'legal', etc. */
+    /* You can also specify custom sizes like 'width height' or 'width height landscape' */
+    /* Example: size: 8.5in 11in; for letter size */
+  }
+}
+
+.printable2{
+  display: none;
+}
+
+@media print {
+  // table {
+  //   max-width: 100%;
+  // }
+  td {
+    word-wrap: break-word; /* Wrap long words */
+    overflow-wrap: break-word; /* Wrap long words for Firefox */
+  }
+  @page {
+    size: A5; /* Set the page size to A4 */
+    /* You can also specify other page sizes such as 'letter', 'legal', etc. */
+    /* You can also specify custom sizes like 'width height' or 'width height landscape' */
+    /* Example: size: 8.5in 11in; for letter size */
+  }
+  .table th,
+.table td {
+  width: 50px;
+  word-wrap: break-word; 
+  white-space: normal;
+  overflow-wrap: break-word; 
+  // border: 1px solid black !important;
+  // background-color: red !important;
+}
+
+
+// input{
+//   width: 50px;
+//   word-wrap: break-word; 
+//   white-space: normal;
+//   overflow-wrap: break-word;
+// }
+.serviceInput{
+  width: 100px;
+}
+.servicetd{
+  width: 120px !important;  
+  word-wrap: break-word; 
+                      white-space: normal;
+                      overflow-wrap: break-word; 
+}
+.qtytd{
+  width: 30px !important;
+  word-wrap: break-word; 
+                      white-space: normal;
+                      overflow-wrap: break-word; 
+}
+.rightAlign2{
+  text-align: right;
+  // text-align: left;
+  // color: red;
+}
+.form-control{
+  padding: 0;
+  margin: 0;
+}
+
+td{
+  border: 1px solid black !important;
+}
+
+// tr{
+//   border: 1px solid black !important;
+// }
+
+// .trcl{
+//   border: 1px solid black !important;
+// }
+
+// th{
+//   border: 1px solid black !important;
+// }
+
+.trcl{
+  border: 2px solid black !important;
+}
+
+.trcl2{
+  border: 1px solid black !important;
+}
+
+.form-control{
+ 
+  border: none !important;
+  background-color: white;
+}
+
+.printable{
+  display: none;
+}
+
+.printable2{
+  display: block;
+}
+.rightAlign{
+  text-align: right;
+  // text-align: left;
+  // color: red;
+  width: 50px !important;
+}
+
+  
+}
+// @media print { ends here
+
+.rightAlign{
+  text-align: right;
+  // width: 50px;
+
+}
+.rightAlign2{
+  text-align: right;
+}
+
+.servicetd{
+  width: 200px !important;
+  word-wrap: break-word !important; 
+  white-space: normal !important;
+  overflow-wrap: break-word !important;
+}
+.qtytd{
+  width: 20px !important;
+}
+
+// .serviceInput{
+//   width: 50px !important;
+//   word-wrap: break-word !important; 
+//   white-space: normal !important;
+//   overflow-wrap: break-word !important;
+// }
+
+
+
+

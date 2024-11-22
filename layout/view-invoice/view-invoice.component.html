@@ -1,0 +1,495 @@
+<div class="printable" id="demo">
+  <h3 class="page-title">MEPG Invoice</h3>
+  <h3 class="page-title" style="float: right !important">
+    <button
+      type="button"
+      class="btn btn-gradient-info btn-rounded btn-icon"
+      (click)="printPage()"
+      title="Take Invoice Print"
+    >
+      <i class="mdi mdi-printer"></i>
+    </button>
+
+    <button
+      type="button"
+      class="btn btn-gradient-primary btn-rounded btn-icon"
+      (click)="print()"
+      title="Take Noting Print"
+    >
+      <i class="mdi mdi-note-outline"></i>
+    </button>
+
+    <!-- for ngx-print lib -->
+    <!-- <button printSectionId="demo" ngxPrint>print2</button> -->
+  </h3>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a href="javascript:;" (click)="navigate()">Invoice Summary</a>
+      </li>
+      <li class="breadcrumb-item active" aria-current="page">MEPG Invoice</li>
+    </ol>
+  </nav>
+
+  <!-- <nav aria-label="breadcrumb" style="float: right !important;">
+   button
+  </nav> -->
+</div>
+
+<div class="printable2" id="demo">
+  <!-- <h3 class="page-title">Invoice</h3> -->
+
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a href="javascript:;">MEPG Invoice</a>
+      </li>
+      <!-- <li class="breadcrumb-item active" aria-current="page">Invoice</li> -->
+    </ol>
+  </nav>
+
+  <!-- <nav aria-label="breadcrumb" style="float: right !important;">
+   button
+  </nav> -->
+</div>
+
+<div class="row">
+  <div class="col-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <form class="forms-sample" [formGroup]="invoiceForm">
+          <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-3">
+              <div class="form-group">
+                <label>Invoice No</label>
+                <input
+                  class="form-control"
+                  formControlName="invoiceNo"
+                  readonly
+                />
+              </div>
+            </div>
+
+            <div class="col-lg-3 col-md-3 col-sm-3">
+              <div class="form-group">
+                <label>Hospital</label>
+                <input
+                  class="form-control"
+                  formControlName="hospital"
+                  readonly
+                />
+              </div>
+            </div>
+
+            <div class="col-lg-3 col-md-3 col-sm-3">
+              <div class="form-group">
+                <label>Package Information</label>
+                <input
+                  class="form-control"
+                  formControlName="packageInfo"
+                  readonly
+                />
+              </div>
+            </div>
+
+            <div class="col-lg-3 col-md-3 col-sm-3">
+              <div class="form-group">
+                <label>Vendor</label>
+                <input class="form-control" formControlName="vendor" readonly />
+              </div>
+            </div>
+
+            <!-- <div class="col-lg-3 col-md-3 col-sm-3">
+              <div class="form-group">
+                <label>Service</label>
+                <input
+                  class="form-control"
+                  formControlName="service"
+                  readonly
+                />
+              </div>
+            </div> -->
+
+            <div class="col-lg-3 col-md-3 col-sm-3">
+              <div class="form-group">
+                <label>Invoice Date</label>
+                <input
+                  class="form-control"
+                  formControlName="invoiceDate"
+                  readonly
+                />
+              </div>
+            </div>
+
+            <div class="col-lg-3 col-md-3 col-sm-3">
+              <div class="form-group">
+                <label>Invoice Month</label>
+                <input
+                  class="form-control"
+                  formControlName="invoiceMonth"
+                  readonly
+                />
+              </div>
+            </div>
+
+            <div class="col-lg-3 col-md-3 col-sm-3">
+              <div class="form-group">
+                <label>Remarks</label>
+                <input
+                  class="form-control"
+                  formControlName="remarks"
+                  readonly
+                />
+              </div>
+            </div>
+
+            <!-- <div class="col-lg-3 col-md-3 col-sm-3">
+              <div class="form-group">
+                <label>Invoice Amount</label>
+                <input
+                  class="form-control"
+                  formControlName="invoiceAmountWithoutTax"
+                  readonly
+                  appFormatNumber
+                />
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3">
+              <div class="form-group">
+                <label>Tax Amount</label>
+                <input
+                  class="form-control"
+                  formControlName="invoiceTaxAmount"
+                  readonly
+                  appFormatNumber
+                />
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3">
+              <div class="form-group">
+                <label>Net Amount</label>
+                <input
+                  class="form-control"
+                  formControlName="invoiceAmount"
+                  readonly
+                  appFormatNumber
+                />
+              </div>
+            </div> -->
+          </div>
+          <br />
+
+           <ngb-tabset
+              type="pills"
+              class="pills-success"
+            >
+              <ngb-tab title="Invoice Detail">
+                <ng-template ngbTabContent>
+
+
+          <div class="row">
+            <div class="col-lg-12 grid-margin stretch-card">
+              <div class="table-responsive tableFixHead">
+                <table class="table table-bordered" formArrayName="details">
+                  <thead class="trcl">
+                    <tr style="" class="trcl table-success">
+                      <td style="width: 50px !important">Sr</td>
+                      <td class="servicetd">Service</td>
+                      <td class="qtytd">Qty</td>
+                      <td style="">Total Amount</td>
+                      <td style="">Tax %</td>
+                      <td style="">Tax Amount</td>
+                      <td style="">Net Amount</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      *ngFor="let item of invServices.controls; let i = index"
+                      [formGroupName]="i"
+                      class="trcl2"
+                    >
+                      <td style="width: 50px !important">{{ i + 1 }}</td>
+                      <td class="servicetd">
+                        <!-- <input
+                          style="
+                            width: 300px !important;
+                            color: red;
+                            word-wrap: break-word;
+                            white-space: normal;
+                            overflow-wrap: break-word;
+                          "
+                          type="text"
+                          class="form-control"
+                          formControlName="serviceDetail"
+                          readonly
+                        /> -->
+                        <p style="background-color: #e9ecef">
+                          {{ item.get("serviceDetail").value }}
+                        </p>
+                      </td>
+                      <td class="qtytd rightAlign2">
+                        <!-- <input
+                          class="form-control rightAlign"
+                          formControlName="qty"
+                          readonly
+                        /> -->
+                        <span style="background-color: #e9ecef">
+                          {{ item.get("qty").value }}
+                        </span>
+                      </td>
+                      <td>
+                        <input
+                          class="form-control rightAlign"
+                          formControlName="amount"
+                          readonly
+                          appFormatNumber
+                        />
+                      </td>
+                      <td style="width: 100px !important">
+                        <input
+                          class="form-control rightAlign"
+                          formControlName="taxPercentage"
+                          readonly
+                          appFormatNumber
+                        />
+                      </td>
+                      <td>
+                        <input
+                          class="form-control rightAlign"
+                          formControlName="taxAmount"
+                          readonly
+                          appFormatNumber
+                        />
+                      </td>
+                      <td>
+                        <input
+                          class="form-control rightAlign"
+                          formControlName="netAmount"
+                          readonly
+                          appFormatNumber
+                        />
+                      </td>
+                    </tr>
+
+                    <tr class="trcl2" style="font-weight: bold">
+                      <td style="width: 50px !important"></td>
+                      <td style="width: 300px !important">Totals</td>
+                      <td style="width: 100px !important"></td>
+                      <td class="rightAlign">
+                        {{ totalAmountWithoutTax | number : "1.0-0" }}
+                      </td>
+                      <td style="width: 100px !important"></td>
+                      <td class="rightAlign">
+                        {{ taxAmount | number : "1.0-0" }}
+                      </td>
+                      <td class="rightAlign">
+                        {{ totalNetAmount | number : "1.0-0" }}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- <div
+              class="row"
+              *ngIf="invoice.invoiceStatus == userInfo.role.status"
+            >
+              <div class="col-lg-12">
+                <br />
+                <button
+                  [disabled]="loading"
+                  class="btn btn-success"
+                  (click)="updateInvoice()"
+                >
+                  <span *ngIf="!loading">Approve</span>
+                  <span *ngIf="loading">
+                    <i class="fa fa-spinner fa-spin"></i>
+                    Approving...
+                  </span>
+                </button>
+              </div>
+            </div> -->
+          </div>
+        </ng-template>
+      </ngb-tab>
+      <ngb-tab title="Documents Attached">
+        <ng-template ngbTabContent>
+          <div class="media">
+            <div class="media-body">
+              <div class="row" *ngIf="remarkTypes.length > 0">
+                <div class="col-md-12">
+                  <div class="form-group" formArrayName="documents">
+                    <div class="row">
+                      <ng-container
+                        *ngFor="
+                          let remark of remarkTypes;
+                          let i = index
+                        "
+                      >
+                        <ng-container *ngIf="remark.id == 1">
+                          <ng-container
+                            *ngFor="let docRemarks of remark.remarks"
+                          >
+                            <div class="col-md-3">
+                              <div class="form-check">
+                                <label class="form-check-label">
+                                  <input
+                                    type="checkbox"
+                                    class="form-check-input"
+                                    [formControlName]="i"
+                                    (change)="
+                                      onCheckboxChange(
+                                        i,
+                                        $event.target.checked
+                                      )
+                                    "
+                                  />
+                                  {{ docRemarks.description }}
+                                  <i class="input-helper"></i>
+                                </label>
+                              </div>
+                            </div>
+                          </ng-container>
+                        </ng-container>
+                      </ng-container>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </ngb-tab>
+      <ngb-tab
+      title="Penalties"
+      *ngIf="userInfo.role.title != 'Vendor'"
+    >
+      <ng-template ngbTabContent>
+        <div class="row" style="margin-bottom: 10px">
+          <div
+            class="col-lg-12"
+            style="
+              text-align: right;
+              justify-content: end;
+              align-items: end;
+            "
+          >
+            <button
+              type="button"
+              class="btn btn-gradient-info d btn-icon"
+              style="float: right"
+              (click)="addRow()"
+            >
+              <i class="mdi mdi-plus"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-12 grid-margin stretch-card">
+            <div class="table-responsive tableFixHead">
+              <table class="table table-bordered">
+                <thead>
+                  <tr class="table-success">
+                    <th>#</th>
+                    <th>Penalty</th>
+                    <th>Amount</th>
+                    <th>Remark</th>
+                    <th>Save</th>
+                    <th>Delete</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    *ngFor="let penalty of penaltyList; let i = index"
+                  >
+                    <td>{{ i + 1 }}</td>
+                    <td>
+                      <p-dropdown
+                        placeholder="Select a Penalty"
+                        appendTo="body"
+                        [options]="penaltyOptions"
+                        optionLabel="label"
+                        optionValue="value"
+                        [(ngModel)]="penalty.penalty"
+                        [ngModelOptions]="{ standalone: true }"
+                        [filter]="true"
+                        filterBy="value.label,value.value"
+                      >
+                      </p-dropdown>
+                    </td>
+                    <td>
+                      <!-- {{ p?.amount}} -->
+                      <input
+                        type="text"
+                        class="form-control"
+                        [(ngModel)]="penalty.amount"
+                        [ngModelOptions]="{ standalone: true }"
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        class="form-control"
+                        [(ngModel)]="penalty.remark"
+                        [ngModelOptions]="{ standalone: true }"
+                      />
+                    </td>
+                    <td>
+                      <button
+                        type="button"
+                        class="btn btn-gradient-primary"
+                        (click)="savePenalty(penalty)"
+                        *ngIf="penalty.saved == 'N'"
+                      >
+                        <i
+                          class="mdi mdi-arrow-right-bold-circle"
+                        ></i>
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-gradient-success"
+                        (click)="savePenalty(penalty)"
+                        *ngIf="penalty.saved == 'Y'"
+                      >
+                        <i
+                          class="mdi mdi-arrow-right-bold-circle"
+                        ></i>
+                      </button>
+                    </td>
+                    <td>
+                      <button
+                        type="button"
+                        class="btn btn-gradient-danger"
+                        (click)="deletePenalty(penalty)"
+                      >
+                        <i
+                          class="mdi mdi-arrow-right-bold-circle"
+                        ></i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </ngb-tab>
+    </ngb-tabset>
+
+          <br />
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <button
+type="button"
+class="btn btn-gradient-info btn-rounded btn-icon"
+(click)="printPage()"
+>
+<i class="mdi mdi-printer"></i>
+</button> -->

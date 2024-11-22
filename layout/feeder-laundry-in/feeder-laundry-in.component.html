@@ -1,0 +1,245 @@
+<app-spinner *ngIf="loadingPage"></app-spinner>
+<ng-container *ngIf="!loadingPage">
+  <div class="page-header">
+    <h3 class="page-title">Laundry Management</h3>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item active" aria-current="page">
+          Laundry Management
+        </li>
+      </ol>
+    </nav>
+  </div>
+  <div class="row">
+    <div class="col-12 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <form class="forms-sample" [formGroup]="invoiceForm">
+            <div class="row">
+              <div class="col-lg-4">
+                <div class="form-group">
+                  <label><strong>Route:</strong> </label>
+                  <p-dropdown
+                    appendTo="body"
+                    [options]="routeList"
+                    optionLabel="title"
+                    optionValue="value.id"
+                    formControlName="routeId"
+                    [filter]="true"
+                    filterBy="value.title"
+                    (onChange)="getSatelliteSentLaundryByFeederIdAndRouteId()"
+                  >
+                  </p-dropdown>
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <div class="form-group">
+                  <label><strong>Feeder:</strong> </label>
+
+                  <p>{{ userInfo?.hospital?.title }}</p>
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <div class="form-group">
+                  <label><strong>Vendor:</strong> </label>
+
+                  <p>{{ satelliteHospitals[0]?.vendorTitle }}</p>
+                </div>
+              </div>
+
+              <!-- <div class="col-lg-4">
+                <div class="form-group">
+                  <label><strong>Vendor:</strong> </label>
+
+                  <p>{{ selectedFeeder.vendorTitle }}</p>
+                </div>
+              </div> -->
+
+              <div class="col-lg-4" *ngIf="invoiceForm.controls.batchNo.value">
+                <div class="form-group">
+                  <label>Batch No</label>
+                  <span class="text-danger">*</span>
+                  <input
+                    class="form-control"
+                    readonly
+                    formControlName="batchNo"
+                  />
+                </div>
+              </div>
+
+              <div class="col-lg-4">
+                <div class="form-group">
+                  <label>Laundry Date</label>
+                  <span class="text-danger">*</span>
+                  <input
+                    type="date"
+                    class="form-control"
+                    formControlName="laundryDate"
+                    readonly
+                    (change)="onLaundryDateChange()"
+                  />
+                </div>
+              </div>
+              <!-- <div class="col-lg-4">
+                <div class="form-group">
+                  <label>Laundry Send Datetime</label>
+                  <span class="text-danger">*</span>
+                  <div class="form-control" readonly>
+                    {{ currentDateTime }}
+                  </div>
+                </div>
+              </div> -->
+            </div>
+            <br />
+
+            <ngb-tabset type="pills" class="pills-success">
+              <ngb-tab title="Laundry Detail">
+                <ng-template ngbTabContent>
+                  <div class="row">
+                    <div class="col-lg-12 grid-margin stretch-card">
+                      <!-- <button
+                        type="button"
+                        class="btn btn-gradient-info btn-rounded btn-icon float"
+                        (click)="addNewService()"
+                      >
+                        <i class="mdi mdi-plus my-float"></i>
+                      </button> -->
+                      <div class="table-responsive tableFixHead">
+                        <table
+                          class="table table-bordered"
+                          formArrayName="details"
+                        >
+                          <thead>
+                            <tr class="table-success">
+                              <td style="width: 50px !important">Sr</td>
+                              <td style="width: 200px !important">
+                                Laundry Items
+                              </td>
+                              <td style="width: 150px !important">Qty</td>
+                              <td style="width: 150px !important">Receive</td>
+                              <td style="width: 150px !important">Remarks</td>
+                              <!-- <td>Action</td> -->
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr
+                              *ngFor="
+                                let item of details.controls;
+                                let i = index
+                              "
+                              [formGroupName]="i"
+                            >
+                              <td style="width: 50px !important">
+                                {{ i + 1 }}
+                              </td>
+                              <td style="width: 200px !important">
+                                <ng-container>
+                                  <input
+                                    type="text"
+                                    class="form-control"
+                                    formControlName="title"
+                                    style="white-space: normal"
+                                    readonly
+                                  />
+                                </ng-container>
+                                <!-- <ng-container
+                                  *ngIf="item.get('auto').value == 'N'"
+                                >
+                                  <p-dropdown
+                                    placeholder="Select Item"
+                                    appendTo="body"
+                                    [options]="itemsList"
+                                    optionLabel="title"
+                                    optionValue="title"
+                                    [filter]="true"
+                                    filterBy="title"
+                                    (onChange)="getCategoryServices($event, i)"
+                                  >
+                                  </p-dropdown>
+                                </ng-container> -->
+                              </td>
+                              <td style="width: 150px !important">
+                                <input
+                                  class="form-control rightAlign"
+                                  type="number"
+                                  formControlName="stQty"
+                                  readonly
+                                />
+                              </td>
+                              <td style="width: 150px !important">
+                                <div class="form-group">
+                                  <input
+                                    class="form-control rightAlign"
+                                    type="number"
+                                    formControlName="qty"
+                                    (input)="
+                                      item.get('qty').updateValueAndValidity()
+                                    "
+                                  />
+                                  <!-- Interactive error message for invalidQty -->
+                                  <small
+                                    *ngIf="
+                                      item.errors?.invalidQty &&
+                                      item.get('qty').touched
+                                    "
+                                    class="text-danger"
+                                  >
+                                    Edited quantity cannot be greater than the
+                                    original quantity.
+                                  </small>
+                                </div>
+                              </td>
+
+                              <td style="width: 150px !important">
+                                <input
+                                  class="form-control"
+                                  type="text"
+                                  formControlName="remarks"
+                                />
+                              </td>
+
+                              <!-- <td>
+                                <button
+                                  type="button"
+                                  class="btn btn-gradient-danger"
+                                  (click)="deleteService(i)"
+                                >
+                                  <i class="mdi mdi-delete-forever"></i>
+                                </button>
+                              </td> -->
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-12">
+                        <br />
+                        <button
+                          [disabled]="
+                            loading ||
+                            invoiceForm.controls.details?.length == 0 ||
+                            !invoiceForm.valid
+                          "
+                          class="btn btn-success"
+                          (click)="createInvoice(invoiceForm.value)"
+                        >
+                          <span *ngIf="!loading">Save</span>
+                          <span *ngIf="loading">
+                            <i class="fa fa-spinner fa-spin"></i> Save
+                          </span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </ng-template>
+              </ngb-tab>
+            </ngb-tabset>
+
+            <br />
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
