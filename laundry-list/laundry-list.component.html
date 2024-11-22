@@ -1,0 +1,148 @@
+<app-spinner *ngIf="loadingPage"></app-spinner>
+<ng-container *ngIf="!loadingPage">
+  <div class="page-header">
+    <h3 class="page-title">Laundry Requests</h3>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item active" aria-current="page">
+          Laundry Management
+        </li>
+      </ol>
+    </nav>
+  </div>
+  <div><div>
+    <div class="row justify-content-center">
+      <!-- Satellite Sections -->
+      <div class="col-md-2 stretch-card grid-margin" *ngIf="showSatelliteSections">
+        <div class="card card-summ bg-gradient-primary card-img-holder small-card">
+          <div class="card-body card-body-reduced text-center">
+            <h4 class="font-weight-normal mb-3">
+              Satellite Received
+              <i class="mdi mdi-call-received mdi-24px float-right"></i>
+            </h4>
+            <h2 class="mb-5">{{ satelliteReceivedCount }}</h2>
+          </div>
+        </div>
+      </div>
+    
+      <div class="col-md-2 stretch-card grid-margin" *ngIf="showSatelliteSections">
+        <div class="card card-summ bg-gradient-warning card-img-holder small-card">
+          <div class="card-body card-body-reduced text-center">
+            <h4 class="font-weight-normal mb-3">
+              Satellite Sent
+              <i class="mdi mdi-trending-neutral mdi-24px float-right"></i>
+            </h4>
+            <h2 class="mb-5">{{ satelliteSentCount }}</h2>
+          </div>
+        </div>
+      </div>
+    
+      <div class="col-md-2 stretch-card grid-margin" *ngIf="showSatelliteSections">
+        <div class="card card-summ bg-gradient-success card-img-holder small-card">
+          <div class="card-body card-body-reduced text-center">
+            <h4 class="font-weight-normal mb-3">
+              InTransit
+              <i class="mdi mdi-reload mdi-24px float-right"></i>
+            </h4>
+            <h2 class="mb-5">{{ intransitCount }}</h2>
+          </div>
+        </div>
+      </div>
+    
+      <!-- Feeder Sections -->
+      <div class="col-md-2 stretch-card grid-margin" *ngIf="showFeederSections">
+        <div class="card card-summ bg-gradient-danger card-img-holder small-card">
+          <div class="card-body card-body-reduced text-center">
+            <h4 class="font-weight-normal mb-3">
+              Feeder Received
+              <i class="mdi mdi-trending-neutral mdi-24px float-right"></i>
+            </h4>
+            <h2 class="mb-5">{{ feederReceivedCount }}</h2>
+          </div>
+        </div>
+      </div>
+    
+      <div class="col-md-2 stretch-card grid-margin" *ngIf="showFeederSections">
+        <div class="card card-summ bg-gradient-secondary card-img-holder small-card">
+          <div class="card-body card-body-reduced text-center">
+            <h4 class="font-weight-normal mb-3">
+              Feeder Sent
+              <i class="mdi mdi-trending-neutral mdi-24px float-right"></i>
+            </h4>
+            <h2 class="mb-5">{{ feederSentCount }}</h2>
+          </div>
+        </div>
+      </div>
+    
+      <div class="col-md-2 stretch-card grid-margin" *ngIf="showFeederSections">
+        <div class="card card-summ bg-gradient-info card-img-holder small-card">
+          <div class="card-body card-body-reduced text-center">
+            <h4 class="font-weight-normal mb-3">
+              InProcess
+              <i class="mdi mdi-reload mdi-24px float-right"></i>
+            </h4>
+            <h2 class="mb-5">{{ inprocessCount }}</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <!-- <h4 class="card-title">Laundry Detail List</h4> -->
+          <div class="table-responsive pt-3">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Batch No</th>
+                  <th>Feeder</th>
+                  <th>Satellite</th>
+                  <th>Vendor</th>
+                  <th>Laundry Date</th>
+                  <th>Status</th>
+                  <th>Details</th>
+                </tr>
+              </thead>
+              <tbody>
+                <ng-container *ngFor="let invoice of itemsList; let i = index">
+                  <tr>
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ invoice.batchNo }}</td>
+                    <td>{{ invoice.feeder.title }}</td>
+                    <td>{{ invoice.satellite.title }}</td>
+                    <td>{{ invoice.vendor.title }}</td>
+                    <td>{{ invoice.laundryDate }}</td>
+                    <td>{{ invoice.laundryStatus }}</td>
+
+                    <td>
+                      <button
+                        type="button"
+                        class="btn btn-gradient-primary"
+                        (click)="viewInvoice(invoice)"
+                      >
+                        <i class="mdi mdi-arrow-right-bold-circle"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </ng-container>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</ng-container>

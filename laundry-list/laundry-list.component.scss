@@ -1,0 +1,28 @@
+.card-body.card-body-reduced {
+    padding: 10px; /* Adjust the padding as needed */
+  }
+  .card-body.card-body-reduced h4 {
+    text-align: center;
+  }
+
+  .small-card {
+    margin: 0px; /* Decrease margin */
+    padding: 0px; /* Decrease padding */
+  }
+  
+  .small-card .card-body {
+    padding: 10px; /* Decrease card body padding */
+  }
+  
+  .small-card h4 {
+    font-size: 1rem; /* Decrease font size */
+  }
+  
+  .small-card h2 {
+    font-size: 1.5rem; /* Decrease font size */
+  }
+  
+  .small-card i {
+    font-size: 20px; /* Decrease icon size */
+  }
+  
