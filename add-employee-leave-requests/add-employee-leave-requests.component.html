@@ -1,0 +1,701 @@
+<!-- Spinner while loading data -->
+<app-spinner *ngIf="loadingPage || loadingPage2"></app-spinner>
+
+<!-- Single Table for both feeder and satellite data -->
+<ng-container *ngIf="!loadingPage && !loadingPage2">
+  <div class="page-header">
+    <h3 class="page-title">
+      Add Leave
+      <!-- <button
+        type="button"
+        class="btn-gradient-info btn-rounded"
+        (click)="openModal()"
+        style="width: 25px"
+      >
+        +
+      </button> -->
+    </h3>
+
+    <!-- <button
+    type="button"
+    class="btn btn-gradient-info btn-rounded btn-icon float2"
+    (click)="refreshList()"
+  >
+    <i class="mdi mdi-plus my-float"></i>
+  </button> -->
+
+    <!-- <button
+      type="button"
+      class="btn btn-gradient-info btn-rounded btn-icon float"
+      (click)="refreshList()"
+    >
+      <i class="mdi mdi-refresh my-float"></i>
+    </button> -->
+
+    <!-- <button
+      type="button"
+      class="btn btn-gradient-info btn-rounded btn-icon float"
+      (click)="openModal()"
+    >
+      <i class="mdi mdi-plus my-float"></i>
+    </button> -->
+  </div>
+
+  <div class="row" *ngIf="one==2">
+    <!-- <div class="col-lg-7 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <div class="d-flex flex-wrap justify-content-between">
+            <h4 class="card-title">Visit And Sales Statistics</h4>
+            <div
+              id="visit-sale-chart-legend"
+              class="rounded-legend legend-horizontal"
+            >
+              <ul>
+                <li><span class="legend-dots"></span>CHN</li>
+                <li><span class="legend-dots"></span>USA</li>
+                <li class="mr-0"><span class="legend-dots"></span>UK</li>
+              </ul>
+            </div>
+          </div>
+          <canvas
+            baseChart
+            #visitSaleChart
+            [chartType]="'bar'"
+            [datasets]="visitSaleChartData"
+            [labels]="visitSaleChartLabels"
+            [options]="visitSaleChartOptions"
+            [colors]="visitSaleChartColors"
+          ></canvas>
+        </div>
+      </div>
+    </div> -->
+
+    <!-- <div class="col-lg-6 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Invoice status</h4>
+          <canvas
+            baseChart
+            [chartType]="'bar'"
+            [datasets]="barChartData"
+            [labels]="barChartLabels"
+            [options]="barChartOptions"
+            [colors]="barChartColors"
+          ></canvas>
+        </div>
+      </div>
+    </div> -->
+
+    <div class="col-lg-4 grid-margin stretch-card" style="cursor: pointer">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Casual Leaves</h4>
+          <canvas
+            #chartCanvas
+            baseChart
+            [chartType]="'pie'"
+            [datasets]="trafficChartData"
+            [labels]="trafficChartLabels"
+            [options]="trafficChartOptions"
+            [colors]="trafficChartColors"
+          >
+            ></canvas
+          >
+
+          <div
+            id="traffic-chart-legend"
+            class="rounded-legend legend-vertical legend-bottom-left pt-4"
+          >
+            <ul class="invoice-status-list">
+              <!-- <li (click)="gotoInvoiceList('Sent')"> -->
+              <li>
+                <span class="legend-dots"></span
+                ><span style="color: black">Entitled</span>
+                <span class="float-right">
+                  <span class="total-invoices" style="color: black">{{
+                    casualLevaesBO?.entitled_leaves
+                  }}</span>
+                </span>
+              </li>
+              <li>
+                <span class="legend-dots"></span>
+                <span style="color: black">Availed</span>
+                <span class="float-right">
+                  <span class="total-invoices" style="color: black">{{
+                    casualLevaesBO?.consumed
+                  }}</span>
+                </span>
+              </li>
+              <!-- <li>
+                <span class="legend-dots"></span
+                ><span style="color: black">Remaining</span>
+                <span class="float-right">
+                  <span class="total-invoices" style="color: black">{{
+                    casualLevaesBO?.remaining_leaves
+                  }}</span>
+                </span>
+              </li> -->
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4 grid-margin stretch-card" style="cursor: pointer">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Medical Leaves</h4>
+          <canvas
+            #chartCanvas
+            baseChart
+            [chartType]="'pie'"
+            [datasets]="trafficChartData2"
+            [labels]="trafficChartLabels2"
+            [options]="trafficChartOptions2"
+            [colors]="trafficChartColors2"
+          >
+            ></canvas
+          >
+
+          <div
+            id="traffic-chart-legend"
+            class="rounded-legend legend-vertical legend-bottom-left pt-4"
+          >
+            <ul class="invoice-status-list">
+              <!-- <li (click)="gotoInvoiceList('Sent')"> -->
+              <li>
+                <span class="legend-dots"></span
+                ><span style="color: black">Entitled</span>
+                <span class="float-right">
+                  <span class="total-invoices" style="color: black">{{
+                    medicalLevaesBO?.entitled_leaves
+                  }}</span>
+                </span>
+              </li>
+              <li>
+                <span class="legend-dots"></span>
+                <span style="color: black">Availed</span>
+                <span class="float-right">
+                  <span class="total-invoices" style="color: black">{{
+                    medicalLevaesBO?.consumed
+                  }}</span>
+                </span>
+              </li>
+              <!-- <li>
+                <span class="legend-dots"></span
+                ><span style="color: black">Remaining</span>
+                <span class="float-right">
+                  <span class="total-invoices" style="color: black">{{
+                    medicalLevaesBO?.remaining_leaves
+                  }}</span>
+                </span>
+              </li> -->
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+              <!-- <canvas
+            #chartCanvas
+            baseChart
+            [chartType]="'bar'"
+            [datasets]="barChartData"
+            [labels]="barChartLabels"
+            [options]="barChartOptions"
+            [colors]="barChartColors"
+          >
+            ></canvas> -->
+
+    <div class="col-lg-4 grid-margin stretch-card">
+      <div class="card" >
+        <div class="card-body">
+          <h4 class="card-title">Leaves Summary</h4>
+
+
+            <!-- <div  style="background-color: #efdfdb;">
+           
+                    <div class="row">
+                      <div class="col-md-7">
+                        <th>Leave Type</th>
+                      </div>
+                      <div class="col-md-5">
+                        <th>Availed</th>
+                      </div>
+                    </div>
+
+                  <ng-container
+                    *ngFor="let r of leaveRemarks; let i = index"
+                  >
+                   
+                      <div class="row">
+                        <div class="col-md-7"> <td>{{ r.description }}</td></div>
+                       
+                        <div class="col-md-5"> <td>{{r.consumed }}</td></div>
+                      </div>
+
+                  </ng-container>
+            </div> -->
+
+
+            <!-- <div style="background-color: #f5f0ec; border-radius: 8px;">
+              <div class="header-row row" style="border-bottom: 2px solid #dcd3d0; ">
+                <div class="col-md-7">
+                  <span class="header-text">Leave Type</span>
+                </div>
+                <div class="col-md-5">
+                  <span class="header-text">Availed</span>
+                </div>
+              </div>
+            
+              <ng-container *ngFor="let r of leaveRemarks; let i = index">
+                <div class="row entry-row" style=" border-bottom: 1px solid #e2dcd9;">
+                  <div class="col-md-7">
+                    <span class="leave-type">{{ r.description }}</span>
+                  </div>
+                  <div class="col-md-5">
+                    <span class="leave-availed">{{ r.consumed }}</span>
+                  </div>
+                </div>
+              </ng-container>
+            </div> -->
+            <div class="main-div">
+              <div class="header-row row" >
+                <div class="col-md-7" >
+                  <span class="header-text">Leave Type</span>
+                </div>
+                <div class="col-md-5" style="text-align: center;">
+                  <span class="header-text">Availed</span>
+                </div>
+              </div>
+            
+              <ng-container *ngFor="let r of leaveRemarks; let i = index">
+                <div class="row entry-row">
+                  <div class="col-md-7" >
+                    <span class="leave-type">{{ r.description }}</span>
+                  </div>
+                  <div class="col-md-5" style="text-align: center;">
+                    <span class="leave-availed">{{ r.consumed }}</span>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+            
+            
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div *ngIf="hrEmployeeLeaves?.length > 0 && one==2">
+    <div class="table-responsive pt-3">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>#</th>
+            <!-- <th>Department Id</th> -->
+            <th>Leave Type</th>
+            <th>No of Leaves</th>
+            <th>Remarks</th>
+            <th>Status</th>
+            <th>From Date</th>
+            <th>To Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container
+            *ngFor="let hrEmployee of hrEmployeeLeaves; let i = index"
+          >
+            <tr>
+              <td>{{ i + 1 }}</td>
+              <td>{{ hrEmployee.leaveType }}</td>
+              <td>{{ hrEmployee.noOfLeaves }}</td>
+              <td>{{ hrEmployee.remarks }}</td>
+              <td>{{ hrEmployee.status }}</td>
+              <td>{{ formatDate(hrEmployee.fromDate) }}</td>
+              <!-- Use formatDate method -->
+              <td>{{ formatDate(hrEmployee.toDate) }}</td>
+              <!-- Use formatDate method -->
+
+              <!-- <td>
+                <button
+                  type="button"
+                  class="btn btn-gradient-primary"
+                  (click)="viewInvoice(hrEmployee)"
+                >
+                  <i class="mdi mdi-arrow-right-bold-circle"></i>
+                </button>
+              </td> -->
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div
+    class="modal fade"
+    tabindex="-1"
+    [ngClass]="{ show: showModal }"
+    [ngStyle]="{ display: showModal ? 'block' : 'none' }"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content rounded-modal">
+        <div class="modal-header">
+          <h5 class="modal-title modal-title-style">Leave Request</h5>
+          <button type="button" class="close" (click)="closeModal()">
+            &times;
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-12">
+              <div class="form-group">
+                <label for="leaveType" class="col-12"> Leave Type </label>
+                <div class="col-md-12">
+                  <select
+                    id="leaveType"
+                    class="form-control rounded-input"
+                    [(ngModel)]="leave.leaveId"
+                    (ngModelChange)="leaveTypeChange()"
+                  >
+                    <option *ngFor="let type of leaveRemarks" [value]="type.id">
+                      {{ type.description }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <ng-container *ngIf="leave.remainingLeaves">
+              <div class="col-6">
+                <div class="form-group">
+                  <label for="nonFunctional" class="col-12">
+                    Remaining leaves
+                  </label>
+                  <div class="col-md-12">
+                    <input
+                      type="number"
+                      id="nonFunctional"
+                      class="form-control rounded-input"
+                      [(ngModel)]="leave.remainingLeaves"
+                      readonly
+                    />
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+
+            <ng-container *ngIf="leave.remainingLeaves">
+              <div class="col-6">
+                <div class="form-group">
+                  <label for="nonFunctional" class="col-12">No of leaveee</label>
+                  <div class="col-md-12">
+                    <input
+                      type="number"
+                      id="noOfLeaves"
+                      class="form-control rounded-input"
+                      [(ngModel)]="leave.noOfLeaves"
+                      [max]="leave.remainingLeaves"
+                      [min]="0"
+                    />
+                    <div *ngIf="exceedLimit" class="text-danger mt-2">
+                      You cannot request more leaves than your remaining balance
+                      of {{ leave.remainingLeaves }}.
+                    </div>
+                    <div *ngIf="lessLimit" class="text-danger mt-2">
+                      You cannot request leaves less than 0.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+
+            <ng-container *ngIf="!leave.remainingLeaves">
+              <div class="col-6">
+                <div class="form-group">
+                  <label for="nonFunctional" class="col-12">
+                    Noooo. of leave</label
+                  >
+                  <div class="col-md-12">
+                    <input
+                      type="number"
+                      id="noOfLeaves"
+                      class="form-control rounded-input"
+                      [(ngModel)]="leave.noOfLeaves"
+                      [min]="0"
+                    />
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+
+            <ng-container>
+              <div class="col-6">
+                <div class="form-group">
+                  <label for="nonFunctional" class="col-12"> From Date </label>
+                  <div class="col-md-12">
+                    <input
+                      type="date"
+                      id="fromDate"
+                      class="form-control rounded-input"
+                      [(ngModel)]="leave.fromDate"
+                    />
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+
+            <ng-container>
+              <div class="col-6">
+                <div class="form-group">
+                  <label for="nonFunctional" class="col-12"> To Date </label>
+                  <div class="col-md-12">
+                    <input
+                      type="date"
+                      id="toDate"
+                      class="form-control rounded-input"
+                      [(ngModel)]="leave.toDate"
+                    />
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <div class="form-group">
+                <label for="nonFunctional" class="col-12"> Reason </label>
+                <div class="col-md-12">
+                  <textarea
+                    id="remarks"
+                    class="form-control rounded-input"
+                    [(ngModel)]="leave.remarks"
+                  >
+                  </textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- <div class="row">
+        <div class="col-12">
+          <div class="form-group">
+            <label for="remarks" class="col-12">
+              Remarks
+            </label>
+            <div class="col-md-12">
+              <textarea
+                id="remarks"
+                class="form-control rounded-input"
+                [(ngModel)]="selectedField.remarks"
+                rows="3"
+              >
+              </textarea>
+            </div>
+          </div>
+        </div>
+      </div> -->
+        </div>
+
+        <div class="modal-footer">
+          <!-- Right-aligned Save button -->
+          <button
+            type="button"
+            class="btn btn-primary ml-auto"
+            (click)="saveChanges()"
+            [disabled]="isLeaveInputDisabled()"
+            style="
+              background-color: #1bcfb4;
+              border-color: #1bcfb4;
+              color: white;
+            "
+          >
+            <span *ngIf="!isSaving">Submit</span>
+            <span
+              *ngIf="isSaving"
+              class="spinner-border spinner-border-sm"
+              role="status"
+              aria-hidden="true"
+            ></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="container">
+    <div class="rounded-modal">
+      <!-- <div class="header">
+        <h5 class="modal-title modal-title-style">Leave Request</h5>
+      </div> -->
+      
+      <div class="container d-flex justify-content-center">
+      <div class="body" style="max-width: 100%;">
+        <div class="row">
+          <div class="col-6">
+            <div class="form-group">
+              <label for="leaveType" class="col-12">Leave Type</label>
+              <div class="col-md-12">
+                <select
+                  id="leaveType"
+                  class="form-control rounded-input"
+                  [(ngModel)]="leave.leaveId"
+                  (ngModelChange)="leaveTypeChange()"
+                >
+                  <option *ngFor="let type of leaveRemarks" [value]="type.id">
+                    {{ type.description }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+  
+          <ng-container *ngIf="leave.remainingLeaves !== null">
+            <div class="col-6">
+              <div class="form-group">
+                <label for="remainingLeaves" class="col-12">Remaining leaves</label>
+                <div class="col-md-12">
+                  <input
+                    type="number"
+                    id="remainingLeaves"
+                    class="form-control rounded-input"
+                    [(ngModel)]="leave.remainingLeaves"
+                    readonly
+                  />
+                </div>
+              </div>
+            </div>
+          </ng-container>
+  
+        
+  
+          <div class="col-6">
+            <div class="form-group">
+              <label for="fromDate" class="col-12">From Date</label>
+              <div class="col-md-12">
+                <input
+                  type="date"
+                  id="fromDate"
+                  class="form-control rounded-input"
+                  [(ngModel)]="leave.fromDate"
+                  [max]="leave.toDate"
+                  (change)="calculateNoOfLeaves()"
+                />
+              </div>
+            </div>
+          </div>
+  
+          <div class="col-6">
+            <div class="form-group">
+              <label for="toDate" class="col-12">To Date</label>
+              <div class="col-md-12">
+                <input
+                  type="date"
+                  id="toDate"
+                  class="form-control rounded-input"
+                  [(ngModel)]="leave.toDate"
+                  [min]="leave.fromDate"
+                  (change)="calculateNoOfLeaves()"
+                />
+              </div>
+            </div>
+          </div>
+          <ng-container *ngIf="leave.remainingLeaves !== null">
+          <div class="col-6">
+            <div class="form-group">
+              <label for="noOfLeaves" class="col-12">No of leave</label>
+              <div class="col-md-12">
+                <input
+                  type="number"
+                  id="noOfLeaves"
+                  class="form-control rounded-input"
+                  [(ngModel)]="leave.noOfLeaves"
+                  [max]="leave.remainingLeaves || undefined"
+                  [min]="0"
+                 
+                  readonly
+                />
+                <div *ngIf="exceedLimit" class="text-danger mt-2">
+                  You cannot request more leaves than your remaining balance of {{ leave.remainingLeaves }}.
+                </div>
+                <div *ngIf="lessLimit" class="text-danger mt-2">
+                  You cannot request leaves less than 0.
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+
+          <ng-container *ngIf="leave.remainingLeaves === null">
+            <div class="col-6">
+              <div class="form-group">
+                <label for="nonFunctional" class="col-12">
+                  No. of leave</label
+                >
+                <div class="col-md-12">
+                  <input
+                    type="number"
+                    id="noOfLeaves"
+                    class="form-control rounded-input"
+                    [(ngModel)]="leave.noOfLeaves"
+                    [min]="0"
+                    readonly
+                  />
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+  
+        <div class="row">
+          <div class="col-12">
+            <div class="form-group">
+              <label for="remarks" class="col-12">Reason</label>
+              <div class="col-md-12">
+                <textarea
+                  id="remarks"
+                  class="form-control rounded-input"
+                  [(ngModel)]="leave.remarks"
+                ></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+      
+  
+      <div class="footer text-right">
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="saveChanges()"
+          [disabled]="isLeaveInputDisabled() || exceedLimit || lessLimit"
+          style="background-color: #1bcfb4; border-color: #1bcfb4; color: white;"
+        >
+          <span *ngIf="!isSaving">Submit</span>
+          <span *ngIf="isSaving" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        </button>
+      </div>
+      <div class="row" *ngIf="note">
+        <div class="col-md-10" style="margin-left: 30px; font-weight: bold; font-size: 11px;">
+          Note: <br>
+          These holdiays will be applied here after completion of manual approval phase.
+        </div>
+      </div>
+    </div>
+  </div>
+    </div>
+  </div>
+  
+
+</ng-container>
+
+<!-- No Data Found message -->
+<!-- <div class="row" *ngIf="!loadingPage && hrEmployeeLeaves?.length === 0">
+  <div class="col-12 grid-margin">
+    <div class="alert alert-success" role="alert">No Data Found</div>
+  </div>
+</div> -->
