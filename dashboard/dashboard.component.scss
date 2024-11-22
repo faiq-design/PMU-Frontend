@@ -1,0 +1,492 @@
+@import "../../styles.scss";
+
+.rounded-legend {
+  ul {
+    padding-left: 0;
+    margin-bottom: 0;
+    li {
+      list-style-type: none;
+      color: $text-muted;
+      font-size: 0.75rem;
+      .legend-dots {
+        width: 1rem;
+        height: 1rem;
+        border-radius: 100%;
+        display: inline-block;
+        vertical-align: text-bottom;
+        margin-right: 0.5rem;
+        .rtl & {
+          margin-left: 0.5rem;
+        }
+      }
+    }
+  }
+  &.legend-horizontal {
+    @include display-flex;
+    ul {
+      li {
+        display: inline-block;
+        margin-right: 1.5rem;
+        .rtl & {
+          margin-right: auto;
+          margin-left: 1.5rem;
+        }
+      }
+    }
+  }
+  &.legend-vertical {
+    ul {
+      li {
+        margin-top: 1rem;
+        &:first-child {
+          margin-top: 0;
+        }
+      }
+    }
+  }
+}
+
+#visit-sale-chart-legend {
+  ul {
+    li {
+      &:nth-child(1) {
+        .legend-dots {
+          background: linear-gradient(
+            to right,
+            rgba(218, 140, 255, 1),
+            rgba(154, 85, 255, 1)
+          );
+        }
+      }
+      &:nth-child(2) {
+        .legend-dots {
+          background: linear-gradient(
+            to right,
+            rgba(255, 191, 150, 1),
+            rgba(254, 112, 150, 1)
+          );
+        }
+      }
+      &:nth-child(3) {
+        .legend-dots {
+          background: linear-gradient(
+            to right,
+            rgba(54, 215, 232, 1),
+            rgba(177, 148, 250, 1)
+          );
+        }
+      }
+    }
+  }
+}
+
+#traffic-chart-legend {
+  ul {
+    li {
+      &:nth-child(1) {
+        .legend-dots {
+          background: linear-gradient(
+            to right,
+            rgba(255, 99, 132, 1),
+            rgba(255, 99, 132, 1)
+          );
+        }
+      }
+      &:nth-child(2) {
+        .legend-dots {
+          background: linear-gradient(
+            to right,
+            rgba(54, 162, 235, 1),
+            rgba(54, 162, 235, 1)
+          );
+        }
+      }
+      &:nth-child(3) {
+        .legend-dots {
+          background: linear-gradient(
+            to right,
+            rgba(75, 192, 192, 1),
+            rgba(75, 192, 192, 1)
+          );
+        }
+      }
+    }
+  }
+}
+
+#bar-chart-legend {
+  ul {
+    li {
+      &:nth-child(1) {
+        .legend-dots {
+          background: linear-gradient(
+            to right,
+            rgba(255, 99, 132, 1),
+            rgba(255, 99, 132, 1)
+          );
+        }
+      }
+      &:nth-child(2) {
+        .legend-dots {
+          background: linear-gradient(
+            to right,
+            rgba(54, 162, 235, 1),
+            rgba(54, 162, 235, 1)
+          );
+        }
+      }
+      &:nth-child(3) {
+        .legend-dots {
+          background: linear-gradient(
+            to right,
+            rgba(255, 206, 86, 1),
+            rgba(255, 206, 86, 1)
+          );
+        }
+      }
+      &:nth-child(4) {
+        .legend-dots {
+          background: linear-gradient(
+            to right,
+            rgba(75, 192, 192, 1),
+            rgba(75, 192, 192, 1)
+          );
+        }
+      }
+      &:nth-child(5) {
+        .legend-dots {
+          background: linear-gradient(
+            to right,
+            rgba(153, 102, 255, 1),
+            rgba(153, 102, 255, 1)
+          );
+        }
+      }
+      &:nth-child(6) {
+        .legend-dots {
+          background: linear-gradient(
+            to right,
+            rgba(255, 159, 64, 1),
+            rgba(255, 159, 64, 1)
+          );
+        }
+      }
+      &:nth-child(7) {
+        .legend-dots {
+          background: linear-gradient(
+            to right,
+            rgba(255, 225, 0, 1),
+            rgba(255, 225, 0, 1)
+          );
+        }
+      }
+    }
+  }
+}
+
+.float {
+  position: fixed !important;
+  width: 60px;
+  height: 60px;
+  // bottom: 40px;
+  right: 10px;
+  text-align: center;
+  z-index: 100;
+}
+
+.my-float {
+  margin-top: 16px;
+}
+#bar-chart-legend ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 columns */
+  grid-auto-rows: auto; /* Auto row height based on content */
+  gap: 10px; /* Spacing between columns and rows */
+}
+
+#bar-chart-legend ul li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 100px;
+  margin-top: auto;
+}
+
+.legend-dots {
+  display: inline-block;
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  background-color: #333; /* Adjust dot color */
+  margin-right: 5px;
+}
+
+.float-right {
+  text-align: right;
+}
+#traffic-chart-legend ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 4 columns */
+  grid-auto-rows: auto; /* Auto row height based on content */
+  gap: 10px; /* Spacing between columns and rows */
+}
+
+#traffic-chart-legend ul li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 100px;
+  margin-top: auto;
+}
+.total-invoices {
+  font-weight: bold;
+  // background-color: yellow; /* Example highlight color */
+  /* Add any other desired styles for the highlighted text */
+  font-size: 16px; /* Adjust the font size as needed */
+  padding: 2px 6px; /* Add padding around the text for better visibility */
+  border-radius: 4px; /* Optional: Add rounded corners to the highlighted area */
+}
+
+.invoice-status-list li:hover {
+  background-color: #e4e3e3; /* Change to desired hover color */
+}
+
+.card-button-service {
+  margin: 10px;
+  text-align: center;
+}
+.card-service {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.card-body-service {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.btn-custom {
+  margin: 5px;
+  color: black;
+}
+.gradient-card {
+  transition: transform 0.2s;
+}
+.gradient-card:hover {
+  transform: scale(1.05);
+}
+.gradient-card:active {
+  transform: scale(0.95);
+}
+
+.gradient-1 {
+  //background: linear-gradient(45deg, #ff6b6b, #f06595);
+  background-color: white;
+  color: black;
+}
+.gradient-2 {
+ // background: linear-gradient(45deg, #74c0fc, #4dabf7);
+  background-color: white;
+  color: black;
+}
+.gradient-3 {
+ // background: linear-gradient(45deg, #69db7c, #38d9a9);
+  background-color: white;
+  color: black;
+}
+.gradient-4 {
+ // background: linear-gradient(45deg, #ffd43b, #fcc419);
+  background-color: white;
+  color: black;
+}
+.gradient-5 {
+ // background: linear-gradient(45deg, #ffa94d, #ff922b);
+  background-color: white;
+  color: black;
+}
+.gradient-6 {
+ // background: linear-gradient(45deg, #9775fa, #845ef7);
+  background-color: white;
+  color: black;
+}
+.gradient-7 {
+ // background: linear-gradient(45deg, #ff8787, #ff6b6b);
+  background-color: white;
+  color: black;
+}
+.gradient-8 {
+  //background: linear-gradient(45deg, #63e6be, #20c997);
+  background-color: white;
+  color: black;
+}
+
+.col-lg-1-5 {
+  flex: 0 0 10%;
+  max-width: 10%;
+}
+
+@media (max-width: 1200px) {
+  .col-lg-1-5 {
+    flex: 0 0 14%;
+    max-width: 14%;
+  }
+}
+.gradient-card {
+  border-radius: 35px; /* Adjust the value to get the desired roundness */
+  overflow: hidden; /* This ensures that any content within the card respects the rounded corners */
+  height: 50px;
+}
+
+.btn-custom {
+  border-radius: 10px; /* Adjust this if you want rounded corners for the button as well */
+}
+.bg-gradient-info {
+  border-radius: 15px; /* Adjust the value as needed */
+}
+.bg-gradient-danger{
+  border-radius: 15px; /* Adjust the value as needed */
+}
+.bg-gradient-primary{
+  border-radius: 15px; /* Adjust the value as needed */
+}
+.bg-gradient-warning{
+  border-radius: 15px; /* Adjust the value as needed */
+}
+
+.custom-card {
+  padding: 0 !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.custom-card-body {
+  text-align: center;
+}
+
+.custom-icon {
+  color: black;
+  font-size: 48px;
+  margin-bottom: 15px;
+}
+
+.custom-title, .custom-count {
+  color: black;
+  font-size: 16px;
+}
+.active-button {
+  background-color: #026499;;
+  color: black;
+}
+/* component.css */
+.card-service.active-button {
+  // background-color: rgb(255, 253, 253);
+  background-color: #026499;;
+  color: white;
+}
+
+.card-service.active-button .btn {
+  color: white;
+}
+
+.active-text {
+  color: white !important;
+}
+
+
+.cardnew-container {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.cardnew {
+  position: relative;
+  width: 270px;
+  height: 120px;
+  border-radius: 15px;
+  padding: 20px;
+  color: black;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.cardnew:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.cardnew-icon {
+  font-size: 36px;
+  z-index: 2;
+  float: right;
+}
+
+.cardnew-progress {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 2;
+}
+
+.cardnew-content {
+  margin-top: 5px;
+  z-index: 2;
+}
+
+.cardnew h3 {
+  /* font-size: 1.5rem; */
+}
+
+.cardnew p {
+  /* font-size: 2rem; */
+  font-weight: bold;
+}
+
+.cardnew::before, .cardnew::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  z-index: 1;
+}
+
+.cardnew::before {
+  width: 110px;
+  height: 90px;
+  top: -30px;
+  right: -30px;
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+.cardnew::after {
+  width: 110px;
+  height: 90px;
+  bottom: -40px;
+  left: -40px;
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+
+h6{
+  //margin-top: 15px !important;
+  font-weight: bold;
+}
+h5{
+  font-size: 0.8rem;
+    margin-top: 20px;
+}
